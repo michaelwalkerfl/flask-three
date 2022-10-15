@@ -6,22 +6,7 @@
             <img src="{{ url_for('static', filename="logo.png") }}" alt="logo">
         </div>
     </div>
+    <h1>Welcome to our home page.</h1>
+{% endblock %}
 
-{% for message in get_flashed_message() %}
-<div class="alert alert-warning">
-    <button
-        type="button"
-        class="close"
-        data-dismiss="alert">
-        x
-    </button>
-    {{ message }}
-</div>
-{% endfor %}
-
-<h1>SIGN UP</h1>
-
-<form method="POST" action="/registration">
-    {{ form.csrf_token }}
-</form>
 
