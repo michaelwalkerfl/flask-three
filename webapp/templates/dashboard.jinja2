@@ -1,0 +1,10 @@
+{% extends "base.jinja2" %}
+
+{% block content %}
+    <div class="form-wrapper">
+        <div class="logo">
+            <img src="{{ url_for('static', filename="logo.png") }}" alt="logo">
+        </div>
+    </div>
+    <h1>Welcome to your dashboard.</h1>
+{% endblock %}
