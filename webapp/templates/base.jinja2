@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Flask-Two</title>
+    {% block custom_head_tags %}{% endblock %}
+  </head>
+  <body>
+	{% block content %}{% endblock %}
+
+    {%  if csrf_token()|safe %}
+    <div style="visibility:hidden;display:none;">
+        <input type="hidden" name="csrf_token" value="{{  csrf_token()|safe }}">
+    </div>
+  {% endif %}
+  </body>
+</html>
