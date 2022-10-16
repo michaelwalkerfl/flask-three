@@ -40,12 +40,7 @@ def signin():
             return redirect(next_page or url_for('dashboard.index'))
         flash('Invalid login.')
         return redirect(url_for('dashboard.signin'))
-    return render_template(
-        'signin.jinja2',
-        form=form,
-        title='Log into your dashboard',
-        body='Log in with your email and password.',
-    )
+    return render_template('signin.jinja2', form=form)
 
 
 @dashboard.route('/sign-out')
@@ -80,25 +75,13 @@ def registration():
                 return redirect(url_for('dashboard.registration'))
             login_user(user)
             return redirect(url_for('dashboard.index'))
-    return render_template(
-        'registration.jinja2',
-        title='User Registration',
-        form=form,
-        template='registration-page',
-        body='Register for a user account.',
-    )
+    return render_template('registration.jinja2', form=form)
 
 
-@login_required
 @dashboard.route('/', methods=['GET', 'POST'])
+@login_required
 def index():
-    return render_template(
-        'dashboard.jinja2',
-        title='Flask-Two Web Application',
-        template='dashboard-template',
-        current_user=current_user,
-        body='You have been logged into your account.'
-    )
+    return render_template('dashboard.jinja2', current_user=current_user)
 
 
 @login_manager.user_loader

@@ -38,16 +38,19 @@ def create_app(config):
     csrf.init_app(app)
     Talisman(app)
 
-    from .utils import register_template_utils
-    register_template_utils(app)
+    with app.app_context():
+        from .utils import register_template_utils
+        register_template_utils(app)
 
-    from .public import public as public_blueprint
-    app.register_blueprint(public_blueprint)
+        from .public import public as public_blueprint
+        app.register_blueprint(public_blueprint)
 
-    from .dashboard import dashboard as dashboard_blueprint
-    app.register_blueprint(dashboard_blueprint, url_prefix='/dashboard')
+        from .dashboard import dashboard as dashboard_blueprint
+        app.register_blueprint(dashboard_blueprint, url_prefix='/dashboard')
 
-    from .admin import admin as admin_dashboard
-    app.register_blueprint(admin_dashboard, url_prefix='/administrator')
+        from .admin import admin as admin_dashboard
+        app.register_blueprint(admin_dashboard, url_prefix='/administrator')
 
-    return app
+        db.create_all()
+
+        return app
