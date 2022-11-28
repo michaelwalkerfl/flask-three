@@ -42,8 +42,8 @@ brew install redis (If Ubuntu/Debia use: apt install redis-server)
 
 ### Run application from terminal
 ```
-FLASK_APP=wsgy=i.py
-flask run 
+FLASK_APP=wsgi.py
+flask run flask run --cert=adhoc
 ```
 
 
