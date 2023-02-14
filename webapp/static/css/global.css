@@ -19,7 +19,6 @@ body {
   display: flex;
   justify-content: space-between;
   width: 50%;
-  border: 1px solid red;
 }
 
 .navigation a {
