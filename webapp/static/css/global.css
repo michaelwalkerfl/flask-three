@@ -45,6 +45,11 @@ body {
     display: none;
   }
 
+  .csrf {
+    visibility:hidden;
+    display:none;
+  }
+
   .hamburger-menu {
     display: block;
     position: absolute;

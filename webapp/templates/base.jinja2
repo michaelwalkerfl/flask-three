@@ -13,11 +13,18 @@
     {% block custom_head_tags %}{% endblock %}
   </head>
   <body>
+      {% block scripts %}
+    <script nonce="{{ csp_nonce() }}">
+        const csrf_token = "{{ csrf_token() }}";
+    </script>
+    {% endblock %}
 	{% block content %}{% endblock %}
 
-    {%  if csrf_token()|safe %}
-    <div style="visibility:hidden;display:none;">
-        <input type="hidden" name="csrf_token" value="{{  csrf_token()|safe }}">
+
+
+    {%  if csrf_token() %}
+    <div class="csrf">
+        <input type="hidden" name="csrf_token" value="{{  csrf_token() }}">
     </div>
   {% endif %}
   </body>

@@ -1,4 +1,5 @@
 import os
+import base64
 
 from flask import Flask
 from flask_login import LoginManager
@@ -21,6 +22,11 @@ login_manager.login_view = 'dashboard.login'
 sess = Session()
 
 
+# Define the csp_nonce function to generate a random nonce value
+def csp_nonce():
+    return base64.b64encode(os.urandom(16)).decode('utf-8')
+
+
 def create_app(config):
     app = Flask(__name__, instance_relative_config=False)
 
@@ -36,7 +42,15 @@ def create_app(config):
     login_manager.init_app(app)
     sess.init_app(app)
     csrf.init_app(app)
-    Talisman(app)
+    csp = {
+        'default-src': '\'self\'',
+        'script-src': '\'self\'',
+    }
+    Talisman(
+        app,
+        content_security_policy=csp,
+        content_security_policy_nonce_in=['script-src']
+    )
 
     with app.app_context():
         from .utils import register_template_utils
