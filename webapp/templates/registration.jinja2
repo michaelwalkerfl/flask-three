@@ -1,11 +1,9 @@
 {% extends "base.jinja2" %}
 
 {% block content %}
-    <div class="form-wrapper">
-        <div class="logo">
-            <img src="{{ url_for('static', filename="logo.png") }}" alt="logo">
-        </div>
-    </div>
+<div class="logo">
+    <img src="{{ url_for('static', filename="images/logo.png") }}" alt="flask-two logo">
+</div>
 
 {% for message in get_flashed_messages() %}
 <div class="alert alert-warning">
@@ -19,8 +17,9 @@
 </div>
 {% endfor %}
 
-<h1>SIGN UP</h1>
 
+<div class="form-wrapper">
+<h1>SIGN UP</h1>
 <form method="POST" action="/registration">
     {{ form.csrf_token }}
 
@@ -87,6 +86,7 @@
     <div class="submit-button">
         {{ form.submit }}
     </div>
-
 </form>
+</div>
+
 {% endblock %}

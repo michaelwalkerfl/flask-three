@@ -39,6 +39,54 @@ body {
   margin: 0 auto;
 }
 
+.form-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 0 10px #ddd;
+}
+
+.form-wrapper input[type="email"],
+.form-wrapper input[type="passwd"] {
+  width: 100%;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.form-wrapper input[type="email"]:focus,
+.form-wrapper input[type="passwd"]:focus {
+  outline: none;
+  border-color: #0077ff;
+}
+
+.form-wrapper input[type="submit"] {
+  width: 100%;
+  padding: 1rem;
+  background-color: #0077ff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.form-wrapper input[type="submit"]:hover {
+  background-color: #0066cc;
+}
+
+.form-wrapper a {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  text-decoration: underline;
+  color: #0077ff;
+}
+
 @media only screen and (max-width: 768px) {
   .navigation {
     display: none;
