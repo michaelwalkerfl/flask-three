@@ -10,7 +10,7 @@ parse_env()
 
 class Config:
     # Flask
-    APP_NAME = os.environ.get('APP_NAME', 'Flask-Two')
+    APP_NAME = os.environ.get('APP_NAME', 'flask-two')
     SECRET_KEY = os.environ.get('FLASK_SECRET_KEY', 'SET_YOUR_SECRET_KEY')
     JSONIFY_PRETTYPRINT_REGULAR = True
 
