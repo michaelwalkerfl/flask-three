@@ -1,4 +1,6 @@
+import click
 import logging
+import os
 
 from flask import Blueprint
 from flask import render_template
@@ -18,6 +20,9 @@ from webapp.dashboard.forms import UserLoginForm
 from webapp.models.user import db
 from webapp.models.user import User
 from webapp import login_manager
+from webapp.utils import parse_env
+
+parse_env()
 
 dashboard = Blueprint(
     'dashboard',
@@ -49,6 +54,24 @@ def sign_out():
     """User sign-out login."""
     logout_user()
     return redirect(url_for('dashboard.signin'))
+
+
+@dashboard.cli.command('create-admin')
+# @click.argument('email')
+def create():
+    new_admin = User(
+        first_name="Admin",
+        last_name="User",
+        email=os.environ.get('ADMIN_EMAIL'),
+    )
+    new_admin.set_passwd(os.environ.get('ADMIN_PASSWORD', 'ChangeThisPassword'))
+    try:
+        db.session.add(new_admin)
+        db.session.commit()
+    except Exception as e:
+        logging.warning('Registering admin in database failed: ', e)
+        db.session.rollback()
+    print(f"Admin created successfully.")
 
 
 @dashboard.route('/registration', methods=['GET', 'POST'])

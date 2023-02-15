@@ -46,6 +46,13 @@ FLASK_APP=wsgi.py
 flask run flask run --cert=adhoc
 ```
 
+### Commands
+#### Create a default user
+This command can be run from the command line interface to quickly set up a user for your Flask application.
+```
+flask dashboard create-admin
+```
+
 
 #### TODO
 Add:

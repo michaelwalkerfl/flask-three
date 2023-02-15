@@ -1,5 +1,8 @@
+import datetime
+
 from webapp import db
 from flask_login import UserMixin
+from sqlalchemy.sql import func
 from werkzeug.security import generate_password_hash
 from werkzeug.security import check_password_hash
 
@@ -34,17 +37,20 @@ class User(UserMixin, db.Model):
         nullable=False,
     )
     created_on = db.Column(
-        db.DateTime,
+        db.DateTime(timezone=True),
         index=False,
         unique=False,
-        nullable=True,
+        server_default=func.now(),
     )
+
     last_login = db.Column(
         db.DateTime,
         index=False,
         unique=False,
         nullable=True,
     )
+
+    role =
 
     def set_passwd(self, passwd):
         """Create password hash."""
