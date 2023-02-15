@@ -2,6 +2,7 @@ import datetime
 
 from webapp import db
 from flask_login import UserMixin
+from flask_login import current_user
 from sqlalchemy.sql import func
 from werkzeug.security import generate_password_hash
 from werkzeug.security import check_password_hash
@@ -50,7 +51,11 @@ class User(UserMixin, db.Model):
         nullable=True,
     )
 
-    role =
+    roles = db.relationship('Role', secondary='user_roles', backref=db.backref('users', lazy='dynamic'))
+
+    def is_authenticated(self):
+        from flask_login import current_user
+        return current_user.is_authenticated
 
     def set_passwd(self, passwd):
         """Create password hash."""
@@ -66,3 +71,20 @@ class User(UserMixin, db.Model):
 
     def __repr__(self):
         return '<User {}>'.format(self.email)
+
+
+class Role(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), unique=True)
+
+
+class UserRoles(db.Model):
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
+    role_id = db.Column(db.Integer, db.ForeignKey('role.id'), primary_key=True)
+
+
+def is_admin():
+    return 'admin' in [role.name for role in current_user.roles]
+
+
+User.is_admin = is_admin

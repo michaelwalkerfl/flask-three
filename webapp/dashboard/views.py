@@ -104,6 +104,8 @@ def registration():
 @dashboard.route('/', methods=['GET', 'POST'])
 @login_required
 def index():
+    if current_user.is_admin():
+        return redirect()
     return render_template('dashboard.jinja2', current_user=current_user)
 
 
