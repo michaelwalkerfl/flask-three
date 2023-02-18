@@ -37,18 +37,18 @@ pip install -r requirements.txt
 
 ### Redis needs to be installed 
 ```
-brew install redis (If Ubuntu/Debia use: apt install redis-server)
+brew install redis (If Ubuntu/Debian use: apt install redis-server)
 ```
 
 ### Run application from terminal
 ```
 FLASK_APP=wsgi.py
-flask run flask run --cert=adhoc
+flask run --cert=adhoc
 ```
 
 ### Commands
-#### Create a default user
-This command can be run from the command line interface to quickly set up a user for your Flask application.
+#### Create an admin user
+These commands can be run from the command line interface to quickly set up a database, roles and an admin user for your Flask application.
 ```
 flask dashboard create-database
 flask dashboard create-roles
@@ -58,7 +58,6 @@ flask dashboard create-admin
 
 #### TODO
 Add:
-- Role Permissions
 - Admin Dashboard
 - Mail (for notifications)
 - Celery
