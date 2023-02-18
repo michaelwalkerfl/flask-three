@@ -69,6 +69,10 @@ class User(UserMixin, db.Model):
         return check_password_hash(
             self.passwd, passwd)
 
+    @classmethod
+    def is_admin(cls):
+        return 'admin' in [role.name for role in current_user.roles]
+
     def __repr__(self):
         return '<User {}>'.format(self.email)
 
@@ -81,10 +85,3 @@ class Role(db.Model):
 class UserRoles(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
     role_id = db.Column(db.Integer, db.ForeignKey('role.id'), primary_key=True)
-
-
-def is_admin():
-    return 'admin' in [role.name for role in current_user.roles]
-
-
-User.is_admin = is_admin
