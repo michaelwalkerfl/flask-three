@@ -1,5 +1,3 @@
-import datetime
-
 from webapp import db
 from flask_login import UserMixin
 from flask_login import current_user

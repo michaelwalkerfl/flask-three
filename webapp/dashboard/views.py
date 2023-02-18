@@ -1,13 +1,10 @@
-import click
 import logging
 import os
 
 from flask import Blueprint
 from flask import render_template
-from flask import request
 from flask import redirect
 from flask import flash
-from flask import session
 from flask import url_for
 
 from flask_login import login_user
@@ -42,8 +39,10 @@ def signin():
         user = User.query.filter_by(email=form.email.data).first()
         if user and user.check_passwd(passwd=form.passwd.data):
             login_user(user)
-            next_page = request.args.get('next')
-            return redirect(next_page or url_for('dashboard.index'))
+            if user.is_admin():
+                return redirect(url_for('dashboard.admin_dashboard'))
+            else:
+                return redirect(url_for('dashboard.index'))
         flash('Invalid login.')
         return redirect(url_for('dashboard.signin'))
     return render_template('signin.jinja2', form=form)
