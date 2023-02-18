@@ -50,6 +50,8 @@ flask run flask run --cert=adhoc
 #### Create a default user
 This command can be run from the command line interface to quickly set up a user for your Flask application.
 ```
+flask dashboard create-database
+flask dashboard create-roles
 flask dashboard create-admin
 ```
 

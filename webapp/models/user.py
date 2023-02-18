@@ -11,7 +11,7 @@ from werkzeug.security import check_password_hash
 class User(UserMixin, db.Model):
     """User database model."""
 
-    __tablename__ = 'users'
+    __tablename__ = 'user'
     id = db.Column(
         db.Integer,
         primary_key=True,

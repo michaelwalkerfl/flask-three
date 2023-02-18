@@ -19,6 +19,7 @@ from webapp.dashboard.forms import UserRegistrationForm
 from webapp.dashboard.forms import UserLoginForm
 from webapp.models.user import db
 from webapp.models.user import User
+from webapp.models.user import Role
 from webapp import login_manager
 from webapp.utils import parse_env
 
@@ -56,8 +57,27 @@ def sign_out():
     return redirect(url_for('dashboard.signin'))
 
 
+@dashboard.cli.command("create-database")
+def create_database():
+    db.create_all()
+    print("Database created successfully.")
+
+
+@dashboard.cli.command("create-roles")
+def create_roles():
+    admin_role = Role(name="admin")
+    user_role = Role(name="user")
+    try:
+        db.session.add(admin_role)
+        db.session.add(user_role)
+        db.session.commit()
+    except Exception as e:
+        logging.warning("Creating roles failed: ", e)
+        db.session.rollback()
+    print("Roles created successfully.")
+
+
 @dashboard.cli.command('create-admin')
-# @click.argument('email')
 def create():
     new_admin = User(
         first_name="Admin",
@@ -65,6 +85,12 @@ def create():
         email=os.environ.get('ADMIN_EMAIL'),
     )
     new_admin.set_passwd(os.environ.get('ADMIN_PASSWORD', 'ChangeThisPassword'))
+    admin_role = Role.query.filter_by(name='admin').first()
+    if not admin_role:
+        admin_role = Role(name='admin')
+        db.session.add(admin_role)
+        db.session.commit()
+    new_admin.roles.append(admin_role)
     try:
         db.session.add(new_admin)
         db.session.commit()
