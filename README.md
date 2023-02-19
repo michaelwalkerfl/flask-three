@@ -1,5 +1,5 @@
 # Flask-Two
-A Flask 2 Web Application Template.
+A completely done for you secure Flask 2 Web Application Template that includes user and admin dashboard.
 
 ![python3.9](https://img.shields.io/badge/python-3.9-brightgreen.svg?style=for-the-badge&logo=python&logoColor=ffdd54)
 ![Flask](https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white)
@@ -58,7 +58,6 @@ flask dashboard create-admin
 
 #### TODO
 Add:
-- Admin Dashboard
 - Mail (for notifications)
 - Celery
 - Docker
