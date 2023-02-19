@@ -47,7 +47,7 @@ flask run --cert=adhoc
 ```
 
 ### Commands
-#### Create an admin user
+#### Create database, roles and admin user
 These commands can be run from the command line interface to quickly set up a database, roles and an admin user for your Flask application.
 ```
 flask dashboard create-database
@@ -55,9 +55,15 @@ flask dashboard create-roles
 flask dashboard create-admin
 ```
 
+### Tests
+#### Functional and Unit tests can be found in the tests directory.
+Run the following command from the root directory.
+```
+python -m pytest --cov=webapp
+```
 
-#### TODO
-Add:
+### TODO
+#### Add:
 - Mail (for notifications)
 - Celery
 - Docker
