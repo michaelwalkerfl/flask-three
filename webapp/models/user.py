@@ -16,12 +16,10 @@ class User(UserMixin, db.Model):
     )
     first_name = db.Column(
         db.String(50),
-        nullable=False,
         unique=False,
     )
     last_name = db.Column(
         db.String(50),
-        nullable=False,
         unique=False,
     )
     email = db.Column(

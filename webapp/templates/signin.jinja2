@@ -16,6 +16,7 @@
   <div></div>
 </div>
 </header>
+<section id="body">
 <div class="form-wrapper">
     {% for message in get_flashed_messages() %}
     <div class="alert alert-warning">
@@ -28,7 +29,7 @@
         {{ message }}
     </div>
     {% endfor %}
-
+    <h1>Sign In</h1>
     <form method="POST" action="{{ url_for('dashboard.signin') }}">
         {{ form.csrf_token }}
 
@@ -70,6 +71,7 @@
     </form>
 
 </div>
+</section>
 
 <script nonce="{{ csp_nonce() }}">
   // Add event listener to close button

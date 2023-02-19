@@ -20,6 +20,8 @@ packaging==21.3
 psycopg2-binary==2.9.4
 pyopenssl==22.1.0
 pyparsing==3.0.9
+pytest==7.2.1
+pytest-flask==1.2.0
 redis==4.3.4
 SQLAlchemy==1.4.41
 Werkzeug==2.2.2

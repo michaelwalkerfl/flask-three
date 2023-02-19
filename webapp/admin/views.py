@@ -27,7 +27,7 @@ def admin_required(func):
     return decorated_view
 
 
-@admin.route('/')
+@admin.route('/', methods=['GET', "POST"])
 @login_required
 @admin_required
 def index():

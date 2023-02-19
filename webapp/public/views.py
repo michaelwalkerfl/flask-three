@@ -9,6 +9,6 @@ public = Blueprint(
 )
 
 
-@public.route('/')
+@public.route('/', methods=['GET'])
 def index():
     return render_template('index.jinja2')
