@@ -17,7 +17,7 @@
     </div>
     {% endfor %}
 
-    <form method="POST" action="/login">
+    <form method="POST" action="{{ url_for('dashboard.signin') }}">
         {{ form.csrf_token }}
 
         <fieldset class="email">

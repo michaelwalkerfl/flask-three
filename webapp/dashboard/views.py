@@ -33,6 +33,7 @@ dashboard = Blueprint(
 @dashboard.route('/signin', methods=['GET', 'POST'])
 def signin():
     if current_user.is_authenticated:
+        flash('You are already logged in..')
         return redirect(url_for('dashboard.index'))
     form = UserLoginForm()
     if form.validate_on_submit():
@@ -40,8 +41,10 @@ def signin():
         if user and user.check_passwd(passwd=form.passwd.data):
             login_user(user)
             if user.is_admin():
-                return redirect(url_for('dashboard.admin_dashboard'))
+                flash("Admin user being redirected to {}".format(url_for('admin.index')))
+                return redirect(url_for('admin.index'))
             else:
+                flash("User being redirected to {}".format(url_for('dashboard.index')))
                 return redirect(url_for('dashboard.index'))
         flash('Invalid login.')
         return redirect(url_for('dashboard.signin'))
@@ -130,7 +133,7 @@ def registration():
 @login_required
 def index():
     if current_user.is_admin():
-        return redirect()
+        return redirect(url_for('admin.index'))
     return render_template('dashboard.jinja2', current_user=current_user)
 
 
