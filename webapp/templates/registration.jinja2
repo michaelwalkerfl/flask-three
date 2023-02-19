@@ -1,9 +1,21 @@
 {% extends "base.jinja2" %}
 
 {% block content %}
+<header>
 <div class="logo">
-    <img src="{{ url_for('static', filename="images/logo.png") }}" alt="flask-two logo">
+  <img src="{{ url_for('static', filename="images/logo.png") }}" alt="flask-two logo">
 </div>
+<nav class="navigation">
+  <a href="/">Home</a>
+  <a href="#">About</a>
+  <a href="#">Contact</a>
+</nav>
+<div class="hamburger-menu">
+  <div></div>
+  <div></div>
+  <div></div>
+</div>
+</header>
 
 {% for message in get_flashed_messages() %}
 <div class="alert alert-warning">
@@ -89,4 +101,13 @@
 </form>
 </div>
 
+<script nonce="{{ csp_nonce() }}">
+  // Add event listener to close button
+  const closeButtons = document.querySelectorAll('.alert .close');
+  closeButtons.forEach(function(button) {
+    button.addEventListener('click', function() {
+      this.parentElement.style.display = 'none';
+    });
+  });
+</script>
 {% endblock %}
