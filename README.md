@@ -10,8 +10,8 @@ A completely done for you secure Flask 2 Web Application Template that includes 
 ```
 git clone https://github.com/michaelwalkerfl/flask-two.git
 cd flask-two
-python3 -m venv env
-source env/bin/activate (if Windows, use: env\Scripts\activate.bat
+python3 -m venv venv
+source venv/bin/activate (if Windows, use: venv\Scripts\activate.bat
 ```
 
 

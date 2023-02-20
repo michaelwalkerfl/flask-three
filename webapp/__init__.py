@@ -3,6 +3,7 @@ import base64
 
 from flask import Flask
 from flask_login import LoginManager
+from flask_mail import Mail
 from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 from flask_talisman import Talisman
@@ -14,6 +15,7 @@ base_directory = os.path.abspath(os.path.dirname(__file__))
 
 db = SQLAlchemy()
 csrf = CSRFProtect()
+mail = Mail()
 
 login_manager = LoginManager()
 login_manager.session_protection = 'basic'
@@ -40,6 +42,7 @@ def create_app(config):
     cfg[config_type].init_app(app)
     db.init_app(app)
     login_manager.init_app(app)
+    mail.init_app(app)
     sess.init_app(app)
     csrf.init_app(app)
     csp = {

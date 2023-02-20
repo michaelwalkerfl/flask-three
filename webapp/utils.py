@@ -1,6 +1,7 @@
 import os
 
 from flask import url_for
+from flask_mail import Message
 from wtforms.fields import Field
 from wtforms.widgets import HiddenInput
 
@@ -11,6 +12,9 @@ def parse_env():
             env_var = line.strip().split('=')
             if len(env_var) == 2:
                 os.environ[env_var[0]] = env_var[1].replace('\"', '')
+
+
+parse_env()
 
 
 def register_template_utils(app):
@@ -55,3 +59,13 @@ class CustomSelectField(Field):
             self.raw_data = [value_list[1]]
         else:
             self.data = ''
+
+
+def send_email(body, subject, to):
+    from webapp import mail
+    msg = Message(body)
+    msg.add_recipient(to)
+    msg.sender = os.environ.get('ADMIN_USER', 'flask-two')
+    msg.body = body
+    msg.subject = subject
+    mail.send(msg)
