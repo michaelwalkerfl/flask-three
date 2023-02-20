@@ -1,5 +1,5 @@
 # Flask-Two
-A completely done for you secure Flask 2 Web Application Template that includes user and admin dashboard.
+A completely done for you secure Flask 2 Web Application Template that includes user and admin dashboards, email notifications and more.
 
 ![python3.9](https://img.shields.io/badge/python-3.9-brightgreen.svg?style=for-the-badge&logo=python&logoColor=ffdd54)
 ![Flask](https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white)
@@ -64,7 +64,6 @@ python -m pytest --cov=webapp
 
 ### TODO
 #### Add:
-- Mail (for notifications)
 - Celery
 - Docker
 - CI/CD for automated tests and deployment
