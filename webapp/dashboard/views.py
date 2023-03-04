@@ -82,11 +82,10 @@ def create_roles():
 
 @dashboard.cli.command('create-admin')
 def create():
-    new_admin = User(
-        first_name="Admin",
-        last_name="User",
-        email=os.environ.get('ADMIN_EMAIL'),
-    )
+    new_admin = User()
+    new_admin.first_name = "Admin"
+    new_admin.last_name = "User"
+    new_admin.email = os.environ.get('ADMIN_EMAIL', 'email@email.com')
     new_admin.set_passwd(os.environ.get('ADMIN_PASSWORD', 'ChangeThisPassword'))
     admin_role = Role.query.filter_by(name='admin').first()
     if not admin_role:
@@ -112,11 +111,10 @@ def registration():
         if user_exists:
             flash('Try logging in.')
         else:
-            user = User(
-                first_name=form.first_name.data,
-                last_name=form.last_name.data,
-                email=form.email.data,
-            )
+            user = User()
+            user.first_name = form.first_name.data
+            user.last_name = form.last_name.data
+            user.email = form.email.data
             user.set_passwd(form.passwd.data)
             try:
                 db.session.add(user)
