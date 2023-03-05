@@ -35,7 +35,7 @@
 <form method="POST" action="/dashboard/registration">
     {{ form.csrf_token }}
 
-    <div class="first-name-input">
+    <div class="">
         <label for="{{ form.first_name.id }}">{{ form.first_name.label }}</label>
         {{ form.first_name(placeholder='Michael', class='first-name-input') }}
         {% if form.first_name.errors %}
@@ -47,7 +47,7 @@
         {% endif %}
     </div>
 
-    <div class="last-name-input">
+    <div class="">
         <label for="{{ form.last_name.id }}">{{ form.last_name.label }}</label>
         {{ form.last_name(placeholder='Walker', class='last-name-input') }}
         {% if form.last_name.errors %}
@@ -99,6 +99,7 @@
     <div class="submit-button">
         {{ form.submit }}
     </div>
+
 </form>
 </div>
 </section>
