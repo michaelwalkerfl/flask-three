@@ -6,9 +6,9 @@
   <img src="{{ url_for('static', filename="images/logo.png") }}" alt="flask-two logo" />
 </div>
 <nav class="navigation">
-  <a href="/">Home</a>
-  <a href="#">About</a>
-  <a href="#">Contact</a>
+  <a href="{{ url_for('public.index') }}">Home</a>
+  <a href="{{ url_for('public.about') }}">About</a>
+  <a href="{{ url_for('public.contact') }}">Contact</a>
 </nav>
 <div class="hamburger-menu">
   <div></div>
