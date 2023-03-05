@@ -60,4 +60,4 @@ class UserLoginForm(FlaskForm):
         'Password',
         validators=[DataRequired()],
     )
-    submit = SubmitField('Log-in')
+    submit = SubmitField()

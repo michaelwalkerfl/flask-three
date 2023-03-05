@@ -1,7 +1,7 @@
 body {
   background-color: #F2F2F2;
   font-family: Arial, sans-serif;
-  margin: 1em auto;
+  margin: 3em auto;
   padding: 3em;
   line-height: 1.5;
 }
@@ -32,7 +32,6 @@ body {
   background-color: #eee;
 }
 
-
 .hamburger-menu {
   display: none;
 }
@@ -56,34 +55,51 @@ body {
 }
 
 .form-wrapper input[type="email"],
-.form-wrapper input[type="passwd"] {
+.form-wrapper input[type="password"] {
   width: 100%;
+  height: 60px;
   padding: 1rem;
   margin-bottom: 1rem;
-  border: 1px solid #ddd;
+  border: none;
   border-radius: 5px;
   font-size: 1rem;
 }
 
 .form-wrapper input[type="email"]:focus,
-.form-wrapper input[type="passwd"]:focus {
+.form-wrapper input[type="password"]:focus {
   outline: none;
   border-color: #0077ff;
 }
 
-.form-wrapper input[type="submit"] {
+.email-input {
   width: 100%;
+  height: 60px;
   padding: 1rem;
-  background-color: #0077ff;
-  color: #fff;
+  margin-bottom: 1rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+#submit {
+  width: 100%;
+  height: 60px;
+  padding: 1rem;
+  margin-top: 1rem;
+  background-color: #0054a6;
+  color: #fff !important;
   border: none;
   border-radius: 5px;
   font-size: 1rem;
   cursor: pointer;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.form-wrapper input[type="submit"]:hover {
-  background-color: #0066cc;
+#submit:hover {
+  background-color: #004387;
 }
 
 .form-wrapper a {
@@ -132,7 +148,7 @@ body {
   }
 
   .navigation a:hover {
-  background-color: #eee;
+    background-color: #eee;
   }
 
   .hamburger-menu div {
