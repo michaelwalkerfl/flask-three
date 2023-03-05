@@ -30,78 +30,78 @@
 {% endfor %}
 
 <section id="body">
-<div class="form-wrapper">
-<h1>SIGN UP</h1>
-<form method="POST" action="/dashboard/registration">
-    {{ form.csrf_token }}
+    <div class="form-wrapper">
+        <h1>SIGN UP</h1>
+        <form method="POST" action="/dashboard/registration">
+            {{ form.csrf_token }}
 
-    <div class="">
-        <label for="{{ form.first_name.id }}">{{ form.first_name.label }}</label>
-        {{ form.first_name(placeholder='Michael', class='first-name-input') }}
-        {% if form.first_name.errors %}
-        <ul class="errors">
-            {% for error in form.first_name.errors %}
-            <li>{{ error }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
+            <div class="">
+                <label for="{{ form.first_name.id }}">{{ form.first_name.label }}</label>
+                {{ form.first_name(placeholder='Michael', class='first-name-input') }}
+                {% if form.first_name.errors %}
+                <ul class="errors">
+                    {% for error in form.first_name.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+
+            <div class="">
+                <label for="{{ form.last_name.id }}">{{ form.last_name.label }}</label>
+                {{ form.last_name(placeholder='Walker', class='last-name-input') }}
+                {% if form.last_name.errors %}
+                <ul class="errors">
+                    {% for error in form.last_name.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+
+            <div class="email">
+              <label for="{{ form.email.id }}">{{ form.email.label }}</label>
+              {{ form.email(placeholder='enter@email.com', class='email-input') }}
+
+              {% if form.email.errors %}
+              <ul class="errors">
+                {% for error in form.email.errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+              </ul>
+              {% endif %}
+            </div>
+
+            <div class="password">
+                {{ form.password.label }}
+                {{ form.password(placeholder='') }}
+                {% if form.password.errors %}
+                <ul class="errors">
+                    {% for error in form.password.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+
+            <div class="password_confirm">
+                {{ form.password_confirm.label }}
+                {{ form.password_confirm(placeholder='') }}
+                {% if form.password_confirm.errors %}
+                <ul class="errors">
+                    {% for error in form.password_confirm.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+
+            <div class="submit-button">
+                {{ form.submit }}
+            </div>
+
+        </form>
     </div>
-
-    <div class="">
-        <label for="{{ form.last_name.id }}">{{ form.last_name.label }}</label>
-        {{ form.last_name(placeholder='Walker', class='last-name-input') }}
-        {% if form.last_name.errors %}
-        <ul class="errors">
-            {% for error in form.last_name.errors %}
-            <li>{{ error }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-    </div>
-
-    <div class="email">
-      <label for="{{ form.email.id }}">{{ form.email.label }}</label>
-      {{ form.email(placeholder='enter@email.com', class='email-input') }}
-
-      {% if form.email.errors %}
-      <ul class="errors">
-        {% for error in form.email.errors %}
-        <li>{{ error }}</li>
-        {% endfor %}
-      </ul>
-      {% endif %}
-    </div>
-
-    <div class="password">
-        {{ form.password.label }}
-        {{ form.password(placeholder='') }}
-        {% if form.password.errors %}
-        <ul class="errors">
-            {% for error in form.password.errors %}
-            <li>{{ error }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-    </div>
-
-    <div class="password_confirm">
-        {{ form.password_confirm.label }}
-        {{ form.password_confirm(placeholder='') }}
-        {% if form.password_confirm.errors %}
-        <ul class="errors">
-            {% for error in form.password_confirm.errors %}
-            <li>{{ error }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-    </div>
-
-    <div class="submit-button">
-        {{ form.submit }}
-    </div>
-
-</form>
-</div>
 </section>
 <script nonce="{{ csp_nonce() }}">
   // Add event listener to close button
