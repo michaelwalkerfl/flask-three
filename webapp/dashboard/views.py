@@ -39,7 +39,7 @@ def signin():
     form = UserLoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        if user and user.check_passwd(passwd=form.passwd.data):
+        if user and user.check_password(password=form.password.data):
             login_user(user)
             if user.is_admin():
                 flash("Admin user being redirected to {}".format(url_for('admin.index')))
@@ -62,21 +62,23 @@ def sign_out():
 
 @dashboard.cli.command("create-database")
 def create_database():
+    db.drop_all()
     db.create_all()
     print("Database created successfully.")
 
 
 @dashboard.cli.command("create-roles")
 def create_roles():
-    admin_role = Role(name="admin")
-    user_role = Role(name="user")
-    try:
-        db.session.add(admin_role)
-        db.session.add(user_role)
-        db.session.commit()
-    except Exception as e:
-        logging.warning("Creating roles failed: ", e)
-        db.session.rollback()
+    roles = ['admin', 'user']
+    for role in roles:
+        try:
+            new_role = Role()
+            new_role.name = role
+            db.session.add(new_role)
+            db.session.commit()
+        except Exception as e:
+            logging.warning(f"Creating role failed: {e}")
+            db.session.rollback()
     print("Roles created successfully.")
 
 
@@ -86,7 +88,7 @@ def create():
     new_admin.first_name = "Admin"
     new_admin.last_name = "User"
     new_admin.email = os.environ.get('ADMIN_EMAIL', 'email@email.com')
-    new_admin.set_passwd(os.environ.get('ADMIN_PASSWORD', 'ChangeThisPassword'))
+    new_admin.set_password(os.environ.get('ADMIN_PASSWORD', 'ChangeThisPassword'))
     admin_role = Role.query.filter_by(name='admin').first()
     if not admin_role:
         admin_role = Role(name='admin')
@@ -115,7 +117,7 @@ def registration():
             user.first_name = form.first_name.data
             user.last_name = form.last_name.data
             user.email = form.email.data
-            user.set_passwd(form.passwd.data)
+            user.set_password(form.password.data)
             try:
                 db.session.add(user)
                 db.session.commit()

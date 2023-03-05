@@ -27,7 +27,7 @@ class UserRegistrationForm(FlaskForm):
             DataRequired(),
         ],
     )
-    passwd = PasswordField(
+    password = PasswordField(
         'Password',
         validators=[
             DataRequired(),
@@ -37,11 +37,11 @@ class UserRegistrationForm(FlaskForm):
             ),
         ],
     )
-    passwd_confirm = PasswordField(
+    password_confirm = PasswordField(
         'Confirm Password',
         validators=[
             DataRequired(),
-            EqualTo('passwd', message='Passwords must match.'),
+            EqualTo('password', message='Passwords must match.'),
         ],
     )
     submit = SubmitField('Register')
@@ -56,7 +56,7 @@ class UserLoginForm(FlaskForm):
             Email(message='Enter a valid email address.'),
         ],
     )
-    passwd = PasswordField(
+    password = PasswordField(
         'Password',
         validators=[DataRequired()],
     )

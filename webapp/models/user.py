@@ -27,7 +27,7 @@ class User(UserMixin, db.Model):
         unique=True,
         nullable=False,
     )
-    passwd = db.Column(
+    password = db.Column(
         db.String(200),
         primary_key=False,
         unique=False,
@@ -53,17 +53,17 @@ class User(UserMixin, db.Model):
         from flask_login import current_user
         return current_user.is_authenticated
 
-    def set_passwd(self, passwd):
+    def set_password(self, password):
         """Create password hash."""
-        self.passwd = generate_password_hash(
-            passwd,
+        self.password = generate_password_hash(
+            password,
             method='sha256'
         )
 
-    def check_passwd(self, passwd):
+    def check_password(self, password):
         """Check password hash."""
         return check_password_hash(
-            self.passwd, passwd)
+            self.password, password)
 
     @classmethod
     def is_admin(cls):
