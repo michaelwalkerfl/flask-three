@@ -3,7 +3,7 @@
 {% block content %}
 <header>
 <div class="logo">
-  <img src="{{ url_for('static', filename="images/logo.png") }}" alt="flask-two logo">
+  <img src="{{ url_for('static', filename="images/logo.png") }}" alt="flask-two logo" />
 </div>
 <nav class="navigation">
   <a href="/">Home</a>
@@ -29,15 +29,15 @@
 </div>
 {% endfor %}
 
-
+<section id="body">
 <div class="form-wrapper">
 <h1>SIGN UP</h1>
 <form method="POST" action="/dashboard/registration">
     {{ form.csrf_token }}
 
-    <fieldset class="first_name">
-        {{ form.first_name.label }}
-        {{ form.first_name(placeholder='Michael') }}
+    <div class="first-name-input">
+        <label for="{{ form.first_name.id }}">{{ form.first_name.label }}</label>
+        {{ form.first_name(placeholder='Michael', class='first-name-input') }}
         {% if form.first_name.errors %}
         <ul class="errors">
             {% for error in form.first_name.errors %}
@@ -45,11 +45,11 @@
             {% endfor %}
         </ul>
         {% endif %}
-    </fieldset>
+    </div>
 
-    <fieldset class="last_name">
-        {{ form.last_name.label }}
-        {{ form.last_name(placeholder='Walker') }}
+    <div class="last-name-input">
+        <label for="{{ form.last_name.id }}">{{ form.last_name.label }}</label>
+        {{ form.last_name(placeholder='Walker', class='last-name-input') }}
         {% if form.last_name.errors %}
         <ul class="errors">
             {% for error in form.last_name.errors %}
@@ -57,50 +57,51 @@
             {% endfor %}
         </ul>
         {% endif %}
-    </fieldset>
+    </div>
 
-    <fieldset class="email">
-        {{ form.email.label }}
-        {{ form.email(placeholder='enter@email.com') }}
-        {% if form.email.errors %}
+    <div class="email">
+      <label for="{{ form.email.id }}">{{ form.email.label }}</label>
+      {{ form.email(placeholder='enter@email.com', class='email-input') }}
+
+      {% if form.email.errors %}
+      <ul class="errors">
+        {% for error in form.email.errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </div>
+
+    <div class="password">
+        {{ form.password.label }}
+        {{ form.password(placeholder='') }}
+        {% if form.password.errors %}
         <ul class="errors">
-            {% for error in form.email.errors %}
+            {% for error in form.password.errors %}
             <li>{{ error }}</li>
             {% endfor %}
         </ul>
         {% endif %}
-    </fieldset>
+    </div>
 
-    <fieldset class="passwd">
-        {{ form.passwd.label }}
-        {{ form.passwd(placeholder='') }}
-        {% if form.passwd.errors %}
+    <div class="password_confirm">
+        {{ form.password_confirm.label }}
+        {{ form.password_confirm(placeholder='') }}
+        {% if form.password_confirm.errors %}
         <ul class="errors">
-            {% for error in form.passwd.errors %}
+            {% for error in form.password_confirm.errors %}
             <li>{{ error }}</li>
             {% endfor %}
         </ul>
         {% endif %}
-    </fieldset>
-
-    <fieldset class="passwd_confirm">
-        {{ form.passwd_confirm.label }}
-        {{ form.passwd_confirm(placeholder='') }}
-        {% if form.passwd_confirm.errors %}
-        <ul class="errors">
-            {% for error in form.passwd_confirm.errors %}
-            <li>{{ error }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-    </fieldset>
+    </div>
 
     <div class="submit-button">
         {{ form.submit }}
     </div>
 </form>
 </div>
-
+</section>
 <script nonce="{{ csp_nonce() }}">
   // Add event listener to close button
   const closeButtons = document.querySelectorAll('.alert .close');
