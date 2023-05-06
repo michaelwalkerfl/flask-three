@@ -64,6 +64,5 @@ python -m pytest --cov=webapp
 
 ### TODO
 #### Add:
-- Celery
 - Docker
 - CI/CD for automated tests and deployment

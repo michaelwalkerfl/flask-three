@@ -1,7 +1,6 @@
 import os
 
 from flask import url_for
-from flask import current_app
 from flask_mail import Message
 from wtforms.fields import Field
 from wtforms.widgets import HiddenInput
@@ -57,7 +56,7 @@ class CustomSelectField(Field):
 
 
 def send_email(body: str, subject: str, to: str):
-    app = create_app(os.getenv("FLASK_ENV", "default"))
+    app = create_app(os.getenv('FLASK_ENV', 'default'))
     with app.app_context():
         from webapp import mail
         msg = Message(body)
@@ -66,7 +65,3 @@ def send_email(body: str, subject: str, to: str):
         msg.body = body
         msg.subject = subject
         mail.send(msg)
-
-
-def mytask(name):
-    print(f"Thank you {name}.")

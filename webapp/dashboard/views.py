@@ -6,7 +6,6 @@ from flask import render_template
 from flask import redirect
 from flask import flash
 from flask import url_for
-from flask import current_app
 
 from flask_login import login_user
 from flask_login import logout_user
@@ -113,7 +112,8 @@ def registration():
     """User registration page."""
     form = UserRegistrationForm()
     if form.validate_on_submit():
-        if user_exists := User.query.filter_by(email=form.email.data).first():
+        user_exists = User.query.filter_by(email=form.email.data).first()
+        if user_exists:
             flash('Try logging in.')
         else:
             user = User()
@@ -128,18 +128,12 @@ def registration():
                 logging.warning('Registering user in database failed: ', e)
                 db.session.rollback()
                 return redirect(url_for('dashboard.registration'))
-            job = rq.get_queue().enqueue(
+            rq.get_queue().enqueue(
                 send_email,
                 "You have successfully registered your account.",
                 "Account registration success.",
                 user.email
             )
-            print(job.get_id())
-            # q.enqueue(send_email(
-            #     body="You have successfully registered your account.",
-            #     subject="Account registration success.",
-            #     to=user.email)
-            # )
             login_user(user)
             return redirect(url_for('dashboard.index'))
     return render_template('registration.jinja2', form=form)

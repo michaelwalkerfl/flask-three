@@ -61,6 +61,7 @@ def create_app(config):
     with app.app_context():
         return create_app_context(app)
 
+
 def create_app_context(app):
     from .utils import register_template_utils
     register_template_utils(app)
