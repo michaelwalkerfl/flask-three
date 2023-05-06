@@ -7,6 +7,8 @@ from wtforms.fields import Field
 from wtforms.widgets import HiddenInput
 from dotenv import load_dotenv
 
+from webapp import create_app
+
 load_dotenv()
 
 
@@ -55,7 +57,7 @@ class CustomSelectField(Field):
 
 
 def send_email(body: str, subject: str, to: str):
-    app = current_app(os.environ.get('FLASK_ENV', 'default'))
+    app = create_app(os.getenv("FLASK_ENV", "default"))
     with app.app_context():
         from webapp import mail
         msg = Message(body)

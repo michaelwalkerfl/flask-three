@@ -6,6 +6,7 @@ from flask import render_template
 from flask import redirect
 from flask import flash
 from flask import url_for
+from flask import current_app
 
 from flask_login import login_user
 from flask_login import logout_user
@@ -45,10 +46,10 @@ def signin():
         if user and user.check_password(password=form.password.data):
             login_user(user)
             if user.is_admin():
-                flash("Admin user being redirected to {}".format(url_for('admin.index')))
+                flash(f"Admin user being redirected to {url_for('admin.index')}")
                 return redirect(url_for('admin.index'))
             else:
-                flash("User being redirected to {}".format(url_for('dashboard.index')))
+                flash(f"User being redirected to {url_for('dashboard.index')}")
                 return redirect(url_for('dashboard.index'))
         flash('Invalid login.')
         return redirect(url_for('dashboard.signin'))
@@ -104,7 +105,7 @@ def create():
     except Exception as e:
         logging.warning('Registering admin in database failed: ', e)
         db.session.rollback()
-    print(f"Admin created successfully.")
+    print("Admin created successfully.")
 
 
 @dashboard.route('/registration', methods=['GET', 'POST'])
@@ -112,8 +113,7 @@ def registration():
     """User registration page."""
     form = UserRegistrationForm()
     if form.validate_on_submit():
-        user_exists = User.query.filter_by(email=form.email.data).first()
-        if user_exists:
+        if user_exists := User.query.filter_by(email=form.email.data).first():
             flash('Try logging in.')
         else:
             user = User()
@@ -156,10 +156,7 @@ def index():
 @login_manager.user_loader
 def load_user(user_id):
     """Check to see if a user is logged in on every page that is loaded."""
-    if user_id:
-        return User.query.get(user_id)
-    else:
-        return None
+    return User.query.get(user_id) if user_id else None
 
 
 @login_manager.unauthorized_handler

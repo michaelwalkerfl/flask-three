@@ -94,4 +94,5 @@ config = {
     'test': TestsConfig,
     'production': ProductionConfig,
     'ubuntu': UbuntuConfig,
+    'default': DevelopmentConfig,
 }
