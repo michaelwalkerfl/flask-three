@@ -8,6 +8,7 @@ from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 from flask_talisman import Talisman
 from flask_wtf import CSRFProtect
+from flask_rq2 import RQ
 
 from config import config as cfg
 
@@ -16,6 +17,7 @@ base_directory = os.path.abspath(os.path.dirname(__file__))
 db = SQLAlchemy()
 csrf = CSRFProtect()
 mail = Mail()
+rq = RQ()
 
 login_manager = LoginManager()
 login_manager.session_protection = 'basic'
@@ -45,6 +47,7 @@ def create_app(config):
     mail.init_app(app)
     sess.init_app(app)
     csrf.init_app(app)
+    rq.init_app(app)
     csp = {
         'default-src': '\'self\'',
         'script-src': '\'self\'',

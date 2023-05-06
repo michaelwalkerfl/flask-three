@@ -12,16 +12,19 @@ from flask_login import logout_user
 from flask_login import current_user
 from flask_login import login_required
 
+from dotenv import load_dotenv
+
 from webapp.dashboard.forms import UserRegistrationForm
 from webapp.dashboard.forms import UserLoginForm
 from webapp.models.user import db
 from webapp.models.user import User
 from webapp.models.user import Role
 from webapp import login_manager
-from webapp.utils import parse_env
+from webapp import rq
 from webapp.utils import send_email
 
-parse_env()
+
+load_dotenv()
 
 dashboard = Blueprint(
     'dashboard',
@@ -125,11 +128,18 @@ def registration():
                 logging.warning('Registering user in database failed: ', e)
                 db.session.rollback()
                 return redirect(url_for('dashboard.registration'))
-            send_email(
-                body="You have successfully registered your account.",
-                subject="Account registration success.",
-                to=user.email
+            job = rq.get_queue().enqueue(
+                send_email,
+                "You have successfully registered your account.",
+                "Account registration success.",
+                user.email
             )
+            print(job.get_id())
+            # q.enqueue(send_email(
+            #     body="You have successfully registered your account.",
+            #     subject="Account registration success.",
+            #     to=user.email)
+            # )
             login_user(user)
             return redirect(url_for('dashboard.index'))
     return render_template('registration.jinja2', form=form)

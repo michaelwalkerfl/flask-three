@@ -1,11 +1,11 @@
 import os
 import redis
 
-from webapp.utils import parse_env
+from dotenv import load_dotenv
 
 base_directory = os.path.abspath(os.path.dirname(__file__))
 
-parse_env()
+load_dotenv()
 
 
 class Config:

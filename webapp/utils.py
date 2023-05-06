@@ -1,20 +1,13 @@
 import os
 
 from flask import url_for
+from flask import current_app
 from flask_mail import Message
 from wtforms.fields import Field
 from wtforms.widgets import HiddenInput
+from dotenv import load_dotenv
 
-
-def parse_env():
-    if os.path.exists('config.env'):
-        for line in open('config.env'):
-            env_var = line.strip().split('=')
-            if len(env_var) == 2:
-                os.environ[env_var[0]] = env_var[1].replace('\"', '')
-
-
-parse_env()
+load_dotenv()
 
 
 def register_template_utils(app):
@@ -61,11 +54,17 @@ class CustomSelectField(Field):
             self.data = ''
 
 
-def send_email(body, subject, to):
-    from webapp import mail
-    msg = Message(body)
-    msg.add_recipient(to)
-    msg.sender = os.environ.get('ADMIN_USER', 'flask-two')
-    msg.body = body
-    msg.subject = subject
-    mail.send(msg)
+def send_email(body: str, subject: str, to: str):
+    app = current_app(os.environ.get('FLASK_ENV', 'default'))
+    with app.app_context():
+        from webapp import mail
+        msg = Message(body)
+        msg.add_recipient(to)
+        msg.sender = os.environ.get('ADMIN_USER', 'flask-two')
+        msg.body = body
+        msg.subject = subject
+        mail.send(msg)
+
+
+def mytask(name):
+    print(f"Thank you {name}.")
