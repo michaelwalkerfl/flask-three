@@ -59,18 +59,21 @@ def create_app(config):
     )
 
     with app.app_context():
-        from .utils import register_template_utils
-        register_template_utils(app)
+        return create_app_context(app)
 
-        from .public import public as public_blueprint
-        app.register_blueprint(public_blueprint)
+def create_app_context(app):
+    from .utils import register_template_utils
+    register_template_utils(app)
 
-        from .dashboard import dashboard as dashboard_blueprint
-        app.register_blueprint(dashboard_blueprint, url_prefix='/dashboard')
+    from .public import public as public_blueprint
+    app.register_blueprint(public_blueprint)
 
-        from .admin import admin as admin_dashboard
-        app.register_blueprint(admin_dashboard, url_prefix='/administrator')
+    from .dashboard import dashboard as dashboard_blueprint
+    app.register_blueprint(dashboard_blueprint, url_prefix='/dashboard')
 
-        db.create_all()
+    from .admin import admin as admin_dashboard
+    app.register_blueprint(admin_dashboard, url_prefix='/administrator')
 
-        return app
+    db.create_all()
+
+    return app
