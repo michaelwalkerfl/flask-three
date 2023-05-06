@@ -33,9 +33,9 @@
     <form method="POST" action="{{ url_for('dashboard.signin') }}">
         {{ form.csrf_token }}
 
-        <div class="email">
+        <div class="">
           <label for="{{ form.email.id }}">{{ form.email.label }}</label>
-          {{ form.email(placeholder='enter@email.com', class='email-input') }}
+          {{ form.email(placeholder='enter@email.com', class='input') }}
 
           {% if form.email.errors %}
           <ul class="errors">
@@ -46,9 +46,9 @@
           {% endif %}
         </div>
 
-        <div class="password">
+        <div class="">
           <label for="{{ form.password.id }}">{{ form.password.label }}</label>
-          {{ form.password(placeholder='') }}
+          {{ form.password(placeholder='Password', class='input') }}
 
           {% if form.password.errors %}
           <ul class="errors">
@@ -59,8 +59,8 @@
           {% endif %}
         </div>
 
-        <div class="submit-button">
-            {{ form.submit }}
+        <div class="">
+            {{ form.submit(class='submit-button') }}
         </div>
 
         <div class="login-signup">

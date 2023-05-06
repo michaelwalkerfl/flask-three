@@ -37,7 +37,7 @@
 
             <div class="">
                 <label for="{{ form.first_name.id }}">{{ form.first_name.label }}</label>
-                {{ form.first_name(placeholder='Michael', class='first-name-input') }}
+                {{ form.first_name(placeholder='Michael', class='input') }}
                 {% if form.first_name.errors %}
                 <ul class="errors">
                     {% for error in form.first_name.errors %}
@@ -49,7 +49,7 @@
 
             <div class="">
                 <label for="{{ form.last_name.id }}">{{ form.last_name.label }}</label>
-                {{ form.last_name(placeholder='Walker', class='last-name-input') }}
+                {{ form.last_name(placeholder='Walker', class='input') }}
                 {% if form.last_name.errors %}
                 <ul class="errors">
                     {% for error in form.last_name.errors %}
@@ -59,9 +59,9 @@
                 {% endif %}
             </div>
 
-            <div class="email">
+            <div class="">
               <label for="{{ form.email.id }}">{{ form.email.label }}</label>
-              {{ form.email(placeholder='enter@email.com', class='email-input') }}
+              {{ form.email(placeholder='enter@email.com', class='input') }}
 
               {% if form.email.errors %}
               <ul class="errors">
@@ -72,9 +72,9 @@
               {% endif %}
             </div>
 
-            <div class="password">
+            <div class="">
                 {{ form.password.label }}
-                {{ form.password(placeholder='') }}
+                {{ form.password(placeholder='Password', class='input') }}
                 {% if form.password.errors %}
                 <ul class="errors">
                     {% for error in form.password.errors %}
@@ -84,9 +84,9 @@
                 {% endif %}
             </div>
 
-            <div class="password_confirm">
+            <div class="">
                 {{ form.password_confirm.label }}
-                {{ form.password_confirm(placeholder='') }}
+                {{ form.password_confirm(placeholder='Password', class='input') }}
                 {% if form.password_confirm.errors %}
                 <ul class="errors">
                     {% for error in form.password_confirm.errors %}
@@ -96,8 +96,8 @@
                 {% endif %}
             </div>
 
-            <div class="submit-button">
-                {{ form.submit }}
+            <div class="">
+                {{ form.submit(class='submit-button') }}
             </div>
 
             <div class="login-signup">
