@@ -8,7 +8,6 @@ from werkzeug.security import check_password_hash
 
 class User(UserMixin, db.Model):
     """User database model."""
-
     __tablename__ = 'user'
     id = db.Column(
         db.Integer,
@@ -57,7 +56,7 @@ class User(UserMixin, db.Model):
         """Create password hash."""
         self.password = generate_password_hash(
             password,
-            method='sha256'
+            method='scrypt'
         )
 
     def check_password(self, password):
@@ -75,7 +74,7 @@ class User(UserMixin, db.Model):
 
 class Role(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), unique=True)
+    name = db.Column(db.String(80))
 
 
 class UserRoles(db.Model):

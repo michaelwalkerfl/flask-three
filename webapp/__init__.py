@@ -57,8 +57,16 @@ def create_app(config):
         content_security_policy=csp,
         content_security_policy_nonce_in=['script-src']
     )
+    app.db = db
 
     with app.app_context():
+        from webapp.commands import create_database
+        from webapp.commands import create_admin
+        from webapp.commands import create_roles
+        from webapp.models import User, Role
+        app.cli.add_command(create_database)
+        app.cli.add_command(create_admin)
+        app.cli.add_command(create_roles)
         return create_app_context(app)
 
 

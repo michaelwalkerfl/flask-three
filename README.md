@@ -1,7 +1,7 @@
 # Flask-Two
 A completely done for you secure Flask 2 Web Application Template that includes user and admin dashboards, email notifications and more.
 
-![python3.9](https://img.shields.io/badge/python-3.9-brightgreen.svg?style=for-the-badge&logo=python&logoColor=ffdd54)
+![python3.9](https://img.shields.io/badge/python-3.11-brightgreen.svg?style=for-the-badge&logo=python&logoColor=ffdd54)
 ![Flask](https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white)
 ![Redis](https://img.shields.io/badge/redis-%23DD0031.svg?style=for-the-badge&logo=redis&logoColor=white)
 
@@ -35,9 +35,10 @@ Other variables that can be added:
 pip install -r requirements.txt
 ```
 
-### Redis needs to be installed 
+### Redis needs to be installed (and turned on) 
 ```
 brew install redis (If Ubuntu/Debian use: apt install redis-server)
+brew services start (or restart)
 ```
 
 ### Run application from terminal
@@ -50,9 +51,9 @@ flask run --cert=adhoc
 #### Create database, roles and admin user
 These commands can be run from the command line interface to quickly set up a database, roles and an admin user for your Flask application.
 ```
-flask dashboard create-database
-flask dashboard create-roles
-flask dashboard create-admin
+flask create-database
+flask create-roles
+flask create-admin
 ```
 
 ### Tests

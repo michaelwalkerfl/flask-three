@@ -63,50 +63,6 @@ def sign_out():
     return redirect(url_for('dashboard.signin'))
 
 
-@dashboard.cli.command("create-database")
-def create_database():
-    db.drop_all()
-    db.create_all()
-    print("Database created successfully.")
-
-
-@dashboard.cli.command("create-roles")
-def create_roles():
-    roles = ['admin', 'user']
-    for role in roles:
-        try:
-            new_role = Role()
-            new_role.name = role
-            db.session.add(new_role)
-            db.session.commit()
-        except Exception as e:
-            logging.warning(f"Creating role failed: {e}")
-            db.session.rollback()
-    print("Roles created successfully.")
-
-
-@dashboard.cli.command('create-admin')
-def create():
-    new_admin = User()
-    new_admin.first_name = "Admin"
-    new_admin.last_name = "User"
-    new_admin.email = os.environ.get('ADMIN_EMAIL', 'email@email.com')
-    new_admin.set_password(os.environ.get('ADMIN_PASSWORD', 'ChangeThisPassword'))
-    admin_role = Role.query.filter_by(name='admin').first()
-    if not admin_role:
-        admin_role = Role(name='admin')
-        db.session.add(admin_role)
-        db.session.commit()
-    new_admin.roles.append(admin_role)
-    try:
-        db.session.add(new_admin)
-        db.session.commit()
-    except Exception as e:
-        logging.warning('Registering admin in database failed: ', e)
-        db.session.rollback()
-    print("Admin created successfully.")
-
-
 @dashboard.route('/registration', methods=['GET', 'POST'])
 def registration():
     """User registration page."""
