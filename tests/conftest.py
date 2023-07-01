@@ -47,6 +47,7 @@ def commit_changes(session):
 
 @pytest.fixture(scope='module')
 def new_user():
-    user = User(email='user@example.com')
-    user.set_passwd(passwd='ThisIsATest')
+    user = User()
+    user.email = 'user@example.com'
+    user.set_password(password='ThisIsATest')
     return user
