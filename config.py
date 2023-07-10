@@ -53,7 +53,7 @@ class DevelopmentConfig(Config):
 class TestsConfig(Config):
     TESTING = True
     SQLALCHEMY_DATABASE_URI = os.environ.get(
-        'DEVELOPMENT_DATABASE',
+        'TEST_DATABASE',
         'sqlite:///' + os.path.join(base_directory, 'tests-database.sqlite')
     )
     WTF_CSRF_ENABLED = False
@@ -67,7 +67,7 @@ class ProductionConfig(Config):
     DEBUG = False
     USE_RELOADER = False
     SQLALCHEMY_DATABASE_URI = os.environ.get(
-        'DEVELOPMENT_DATABASE',
+        'PRODUCTION_DATABASE',
         'sqlite:///' + os.path.join(base_directory, 'production-database.sqlite')
     )
 
