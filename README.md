@@ -1,7 +1,7 @@
 # Flask-Two
 A completely done for you secure Flask 2 Web Application Template that includes user and admin dashboards, email notifications and more.
 
-![python3.9](https://img.shields.io/badge/python-3.11-brightgreen.svg?style=for-the-badge&logo=python&logoColor=ffdd54)
+![python3.11](https://img.shields.io/badge/python-3.11-brightgreen.svg?style=for-the-badge&logo=python&logoColor=ffdd54)
 ![Flask](https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white)
 ![Redis](https://img.shields.io/badge/redis-%23DD0031.svg?style=for-the-badge&logo=redis&logoColor=white)
 
