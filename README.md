@@ -1,5 +1,5 @@
-# Flask-Two
-A completely done for you secure Flask 2 Web Application Template that includes user and admin dashboards, email notifications and more.
+# Flask-Three
+A completely done for you secure Flask 3 Web Application Template that includes user and admin dashboards, email notifications and more.
 
 ![python3.11](https://img.shields.io/badge/python-3.11-brightgreen.svg?style=for-the-badge&logo=python&logoColor=ffdd54)
 ![Flask](https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white)
@@ -8,8 +8,8 @@ A completely done for you secure Flask 2 Web Application Template that includes 
 ### Setting up
 
 ```
-git clone https://github.com/michaelwalkerfl/flask-two.git
-cd flask-two
+git clone https://github.com/michaelwalkerfl/flask-three.git
+cd flask-three
 python3 -m venv venv
 source venv/bin/activate (if Windows, use: venv\Scripts\activate.bat
 ```
@@ -23,7 +23,7 @@ Add a secret key to this file e.g., `FLASK_SECRET_KEY=ThisIsOurTopSecretEncrypti
 
 Other variables that can be added:
 
-- `APP_NAME=Flask-Two`
+- `APP_NAME=Flask-Three`
 - `FLASK_ENV=development`
 - `DEVELOPMENT_DATABASE=sqlite:///development.db`
 - `TEST_DATABASE=sqlite:///test.db`
