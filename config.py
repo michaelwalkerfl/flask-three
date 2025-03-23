@@ -10,8 +10,8 @@ load_dotenv()
 
 class Config:
     # Flask
-    APP_NAME = os.environ.get('APP_NAME', 'flask-two')
-    SECRET_KEY = os.environ.get('FLASK_SECRET_KEY', 'SET_YOUR_SECRET_KEY')
+    APP_NAME = os.environ.get('APP_NAME', 'flask-three')
+    SECRET_KEY = os.environ.get('FLASK_SECRET_KEY', 'SET_YOUR_SECRET_FLASK_THREE_KEY')
     JSONIFY_PRETTYPRINT_REGULAR = True
 
     # Database
@@ -30,8 +30,12 @@ class Config:
     # Flask-Session
     SESSION_TYPE = os.environ.get('SESSION_TYPE', 'redis')
     SESSION_REDIS = redis.from_url(os.environ.get(
-        'SESSION_REDIS', 'redis://localhost:6379')
+        'SESSION_REDIS', 'redis://redis:6379/0')
     )
+
+    # Flask-RQ2
+    RQ_REDIS_URL = os.environ.get('SESSION_REDIS', 'redis://redis:6379/0')
+    RQ_QUEUES = ['default']
 
     @staticmethod
     def init_app(app):

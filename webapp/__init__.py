@@ -49,8 +49,10 @@ def create_app(config):
     csrf.init_app(app)
     rq.init_app(app)
     csp = {
-        'default-src': '\'self\'',
-        'script-src': '\'self\'',
+        'default-src': "'self'",
+        'script-src': "'self'",
+        'img-src': "'self' data: blob:",
+        'style-src': "'self'"
     }
     Talisman(
         app,

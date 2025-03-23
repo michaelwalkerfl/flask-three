@@ -1,25 +1,18 @@
 {% extends "base.jinja2" %}
 {% block custom_head_tags %}{% endblock %}
-{% block content %}
-  <header>
-    <div class="logo">
-      <a href="{{ url_for('public.index') }}"><img src="{{ url_for('static', filename="images/logo.png") }}" alt="flask-two logo" /></a>
-    </div>
-    <nav class="navigation">
-      <a href="{{ url_for('public.index') }}">Home</a>
-      <a href="{{ url_for('public.about') }}">About</a>
-      <a href="{{ url_for('public.contact') }}">Contact</a>
-      <a href="{{ url_for('dashboard.signin') }}">Sign-in</a>
-      <a href="{{ url_for('dashboard.registration') }}">Register</a>
-    </nav>
-    <div class="hamburger-menu">
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
-  </header>
-  <section id="body">
-    <h1>Welcome to our website.</h1>
-  </section>
 
+{% block navigation %}
+<nav class="navigation">
+  <a href="{{ url_for('public.index') }}">Home</a>
+  <a href="{{ url_for('public.about') }}">About</a>
+  <a href="{{ url_for('public.contact') }}">Contact</a>
+  <a href="{{ url_for('dashboard.signin') }}">Sign-in</a>
+  <a href="{{ url_for('dashboard.registration') }}">Register</a>
+</nav>
+{% endblock %}
+
+{% block content %}
+<section id="body">
+  <h1>Welcome to our website.</h1>
+</section>
 {% endblock %}

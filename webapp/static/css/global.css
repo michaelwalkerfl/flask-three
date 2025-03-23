@@ -1,31 +1,64 @@
 body {
   background-color: #F2F2F2;
   font-family: Arial, sans-serif;
-  margin: 3em auto;
-  padding: 3em;
+  margin: 0;
+  padding: 0;
   line-height: 1.5;
+  min-height: 100vh;
+}
+
+header {
+  background-color: white;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
 }
 
 .logo {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  max-width: 200px !important;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  z-index: 1001;
+  width: 200px; /* Set explicit width */
+}
+
+.logo a {
+  display: block;
+  text-decoration: none;
+  width: 100%; /* Take full width of parent */
+}
+
+.logo img {
+  width: 100%; /* Take full width of parent */
+  height: 40px; /* Set explicit height */
+  object-fit: contain; /* Maintain aspect ratio */
+  display: block;
+  fill: #000000; /* Force black fill for SVG */
 }
 
 .navigation {
-  position: absolute;
-  top: 10px;
-  right: 10px;
   display: flex;
-  justify-content: space-between;
-  width: 50%;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+  flex-grow: 1;
+  margin-left: 2rem;
 }
 
 .navigation a {
   text-decoration: none;
   color: black;
-  padding: 10px 20px;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
 }
 
 .navigation a:hover {
@@ -34,6 +67,11 @@ body {
 
 .hamburger-menu {
   display: none;
+}
+
+#body {
+  margin-top: 100px;
+  padding: 2rem;
 }
 
 .navigation.active {
@@ -108,51 +146,64 @@ body {
 }
 
 @media only screen and (max-width: 768px) {
+  header {
+    padding: 0.5rem;
+  }
+
+  .logo {
+    width: 150px; /* Smaller width on mobile */
+  }
+
+  .logo img {
+    height: 30px; /* Smaller height on mobile */
+  }
+
   .navigation {
     display: none;
+    margin-left: 0;
+  }
+
+  .hamburger-menu {
+    display: block;
+    cursor: pointer;
+    margin-left: auto;
+  }
+
+  .navigation.active {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: white;
+    width: 200px;
+    padding: 1rem;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+    border-radius: 0 0 10px 10px;
+  }
+
+  .navigation a {
+    display: block;
+    text-align: left;
+    padding: 0.75rem 1rem;
+    width: 100%;
+  }
+
+  .hamburger-menu div {
+    width: 25px;
+    height: 2px;
+    background-color: black;
+    margin: 5px;
+    transition: all 0.3s ease;
+  }
+
+  #body {
+    margin-top: 80px;
+    padding: 1rem;
   }
 
   .csrf {
     visibility: hidden;
     display: none;
-  }
-
-  .hamburger-menu {
-    display: block;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-  }
-
-  /* Add styles for the active class */
-  .navigation.active {
-    display: block;
-    position: absolute;
-    top: 50px;
-    right: 0;
-    background-color: white;
-    width: 200px;
-    height: 100%;
-    padding: 20px;
-    box-shadow: 2px 2px 10px #ccc;
-    border-radius: 10px;
-  }
-
-  .navigation a {
-    display: block;
-    margin: 10px 0;
-    text-align: center;
-  }
-
-  .navigation a:hover {
-    background-color: #eee;
-  }
-
-  .hamburger-menu div {
-    width: 30px;
-    height: 3px;
-    background-color: black;
-    margin: 5px;
   }
 }

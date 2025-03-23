@@ -61,7 +61,7 @@ def send_email(body: str, subject: str, to: str):
         from webapp import mail
         msg = Message(body)
         msg.add_recipient(to)
-        msg.sender = os.environ.get('ADMIN_USER', 'flask-two')
+        msg.sender = os.environ.get('ADMIN_USER', 'flask-three')
         msg.body = body
         msg.subject = subject
         mail.send(msg)
