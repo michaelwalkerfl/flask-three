@@ -1,18 +1,104 @@
 {% extends "base.jinja2" %}
-{% block custom_head_tags %}{% endblock %}
-
-{% block navigation %}
-<nav class="navigation">
-  <a href="{{ url_for('public.index') }}">Home</a>
-  <a href="{{ url_for('public.about') }}">About</a>
-  <a href="{{ url_for('public.contact') }}">Contact</a>
-  <a href="{{ url_for('dashboard.signin') }}">Sign-in</a>
-  <a href="{{ url_for('dashboard.registration') }}">Register</a>
-</nav>
-{% endblock %}
 
 {% block content %}
-<section id="body">
-  <h1>Welcome to our website.</h1>
+<section class="hero">
+  <div class="container hero-inner">
+    <div class="hero-copy">
+      <span class="eyebrow"><i class="fa-solid fa-flask" aria-hidden="true"></i> Flask 3.1 &middot; Python 3.13</span>
+      <h1>Ship your Flask app <span class="accent">this week</span>, not next quarter.</h1>
+      <p class="lead">{{ config.APP_NAME }} is a secure, production-ready starter with authentication, user and admin dashboards, background jobs and email already wired together.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary btn-lg" href="{{ url_for('dashboard.registration') }}">Get started <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+        <a class="btn btn-secondary btn-lg" href="{{ config.REPOSITORY_URL }}" rel="noopener"><i class="fa-brands fa-github" aria-hidden="true"></i> View on GitHub</a>
+      </div>
+    </div>
+    <div class="terminal" aria-label="Quick start commands">
+      <div class="terminal-bar"><span></span><span></span><span></span><em>zsh</em></div>
+<pre><code><span class="c"># clone and configure</span>
+<span class="p">$</span> git clone {{ config.REPOSITORY_URL }}.git
+<span class="p">$</span> cd flask-three
+<span class="p">$</span> cp config.env.example config.env
+
+<span class="c"># web, worker, postgres and redis</span>
+<span class="p">$</span> docker compose up --build
+<span class="ok">web-1     | Running on http://0.0.0.0:5001</span>
+<span class="ok">worker-1  | Listening on default...</span></code></pre>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <h2>Everything a real app needs on day one</h2>
+      <p class="muted">Skip the boilerplate and start on the part that makes your product different.</p>
+    </div>
+    <div class="feature-grid">
+      <article class="feature">
+        <span class="feature-icon"><i class="fa-solid fa-user-shield" aria-hidden="true"></i></span>
+        <h3>Authentication and roles</h3>
+        <p>Registration, sign-in, scrypt password hashing and role-based access with separate user and admin areas.</p>
+      </article>
+      <article class="feature">
+        <span class="feature-icon"><i class="fa-solid fa-lock" aria-hidden="true"></i></span>
+        <h3>Secure by default</h3>
+        <p>CSRF protection, a strict Content Security Policy with nonces, HTTPS enforcement and hardened session cookies.</p>
+      </article>
+      <article class="feature">
+        <span class="feature-icon"><i class="fa-solid fa-gauge-high" aria-hidden="true"></i></span>
+        <h3>Admin dashboard</h3>
+        <p>User metrics and a paginated user directory, ready for you to extend with your own admin tools.</p>
+      </article>
+      <article class="feature">
+        <span class="feature-icon"><i class="fa-solid fa-bolt" aria-hidden="true"></i></span>
+        <h3>Background jobs</h3>
+        <p>Redis Queue workers keep slow work like email delivery out of the request cycle.</p>
+      </article>
+      <article class="feature">
+        <span class="feature-icon"><i class="fa-solid fa-envelope-open-text" aria-hidden="true"></i></span>
+        <h3>Transactional email</h3>
+        <p>Flask-Mail over SMTP with SendGrid defaults, plus a working contact form that emails you.</p>
+      </article>
+      <article class="feature">
+        <span class="feature-icon"><i class="fa-brands fa-docker" aria-hidden="true"></i></span>
+        <h3>Docker and CI</h3>
+        <p>One command brings up the web app, worker, PostgreSQL and Redis. GitHub Actions lints and tests every push.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container stack">
+    <div class="section-head">
+      <h2>Built on a stack you already know</h2>
+      <p class="muted">No build step, no framework lock-in. Just well-organized Flask.</p>
+    </div>
+    <ul class="stack-list">
+      <li><i class="fa-brands fa-python" aria-hidden="true"></i> Python 3.13</li>
+      <li><i class="fa-solid fa-flask" aria-hidden="true"></i> Flask 3.1</li>
+      <li><i class="fa-solid fa-database" aria-hidden="true"></i> SQLAlchemy 2</li>
+      <li><i class="fa-solid fa-server" aria-hidden="true"></i> PostgreSQL 17</li>
+      <li><i class="fa-solid fa-layer-group" aria-hidden="true"></i> Redis and RQ</li>
+      <li><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Talisman CSP</li>
+      <li><i class="fa-brands fa-docker" aria-hidden="true"></i> Docker Compose</li>
+      <li><i class="fa-solid fa-vial" aria-hidden="true"></i> pytest and Ruff</li>
+    </ul>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="cta-band">
+      <div>
+        <h2>Ready to build?</h2>
+        <p>Create an account to see the user dashboard, or sign in as the admin to explore the admin tools.</p>
+      </div>
+      <div class="cta-actions">
+        <a class="btn btn-light btn-lg" href="{{ url_for('dashboard.registration') }}">Create an account</a>
+        <a class="btn btn-outline-light btn-lg" href="{{ url_for('dashboard.signin') }}">Sign in</a>
+      </div>
+    </div>
+  </div>
 </section>
 {% endblock %}

@@ -1,80 +1,22 @@
 {% extends "base.jinja2" %}
+{% from "_macros.jinja2" import field %}
 
-{% block navigation %}
-<nav class="navigation">
-  <a href="{{ url_for('public.index') }}">Home</a>
-  <a href="{{ url_for('public.about') }}">About</a>
-  <a href="{{ url_for('public.contact') }}">Contact</a>
-  <a href="{{ url_for('dashboard.signin') }}">Sign-in</a>
-  <a href="{{ url_for('dashboard.registration') }}">Register</a>
-</nav>
-{% endblock %}
+{% block title %}Sign in | {{ config.APP_NAME }}{% endblock %}
 
 {% block content %}
-<section id="body">
-<div class="form-wrapper">
-    {% for message in get_flashed_messages() %}
-    <div class="alert alert-warning">
-        <button
-            type="button"
-            class="close"
-            data-dismiss="alert">
-            x
-        </button>
-        {{ message }}
+<section class="auth">
+  <div class="auth-card card">
+    <div class="auth-head">
+      <h1>Welcome back</h1>
+      <p class="muted">Sign in to your account to continue.</p>
     </div>
-    {% endfor %}
-    <h1>Sign In</h1>
-    <form method="POST" action="{{ url_for('dashboard.signin') }}">
-        {{ form.csrf_token }}
-
-        <div class="">
-          <label for="{{ form.email.id }}">{{ form.email.label }}</label>
-          {{ form.email(placeholder='enter@email.com', class='input') }}
-
-          {% if form.email.errors %}
-          <ul class="errors">
-            {% for error in form.email.errors %}
-            <li>{{ error }}</li>
-            {% endfor %}
-          </ul>
-          {% endif %}
-        </div>
-
-        <div class="">
-          <label for="{{ form.password.id }}">{{ form.password.label }}</label>
-          {{ form.password(placeholder='Password', class='input') }}
-
-          {% if form.password.errors %}
-          <ul class="errors">
-            {% for error in form.password.errors %}
-            <li>{{ error }}</li>
-            {% endfor %}
-          </ul>
-          {% endif %}
-        </div>
-
-        <div class="">
-            {{ form.submit(class='submit-button') }}
-        </div>
-
-        <div class="login-signup">
-            <span>Need an account?</span>
-            <a href="{{ url_for('dashboard.registration') }}">Register</a>
-        </div>
-
+    <form method="POST" action="{{ url_for('dashboard.signin', next=request.args.get('next')) }}" novalidate>
+      {{ form.csrf_token }}
+      {{ field(form.email, 'you@example.com', 'fa-envelope', 'email') }}
+      {{ field(form.password, 'Your password', 'fa-lock', 'current-password') }}
+      {{ form.submit(class='btn btn-primary btn-block') }}
     </form>
-
-</div>
+    <p class="auth-foot">Need an account? <a href="{{ url_for('dashboard.registration') }}">Create one</a></p>
+  </div>
 </section>
-
-<script nonce="{{ csp_nonce() }}">
-  // Add event listener to close button
-  const closeButtons = document.querySelectorAll('.alert .close');
-  closeButtons.forEach(function(button) {
-    button.addEventListener('click', function() {
-      this.parentElement.style.display = 'none';
-    });
-  });
-</script>
 {% endblock %}

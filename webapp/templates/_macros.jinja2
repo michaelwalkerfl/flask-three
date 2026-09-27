@@ -1,0 +1,16 @@
+{% macro field(f, placeholder='', icon=None, autocomplete=None, rows=None) %}
+<div class="field{% if f.errors %} has-error{% endif %}">
+  <label for="{{ f.id }}">{{ f.label.text }}</label>
+  <div class="input-wrap{% if icon %} has-icon{% endif %}">
+    {% if icon %}<i class="fa-solid {{ icon }}" aria-hidden="true"></i>{% endif %}
+    {% set attrs = {'class': 'input', 'placeholder': placeholder} %}
+    {% if autocomplete %}{% set _ = attrs.update({'autocomplete': autocomplete}) %}{% endif %}
+    {% if rows %}{% set _ = attrs.update({'rows': rows}) %}{% endif %}
+    {% if f.errors %}{% set _ = attrs.update({'aria-invalid': 'true', 'aria-describedby': f.id ~ '-error'}) %}{% endif %}
+    {{ f(**attrs) }}
+  </div>
+  {% if f.errors %}
+  <p class="field-error" id="{{ f.id }}-error">{{ f.errors|join(' ') }}</p>
+  {% endif %}
+</div>
+{% endmacro %}

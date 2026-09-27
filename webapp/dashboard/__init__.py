@@ -1,1 +1,1 @@
-from webapp.dashboard.views import dashboard
+from webapp.dashboard.views import dashboard as dashboard

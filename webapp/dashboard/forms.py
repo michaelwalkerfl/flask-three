@@ -1,16 +1,11 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField
-from wtforms import PasswordField
-from wtforms import SubmitField
-
-from wtforms.validators import DataRequired
-from wtforms.validators import Email
-from wtforms.validators import EqualTo
-from wtforms.validators import Length
+from wtforms import PasswordField, StringField, SubmitField
+from wtforms.validators import DataRequired, Email, EqualTo, Length
 
 
 class UserRegistrationForm(FlaskForm):
     """User Registration Form."""
+
     first_name = StringField(
         'First Name',
         validators=[DataRequired()],
@@ -44,11 +39,12 @@ class UserRegistrationForm(FlaskForm):
             EqualTo('password', message='Passwords must match.'),
         ],
     )
-    submit = SubmitField('Register')
+    submit = SubmitField('Create account')
 
 
 class UserLoginForm(FlaskForm):
     """User Log-in Form."""
+
     email = StringField(
         'Email',
         validators=[
@@ -60,4 +56,4 @@ class UserLoginForm(FlaskForm):
         'Password',
         validators=[DataRequired()],
     )
-    submit = SubmitField()
+    submit = SubmitField('Sign in')

@@ -1,17 +1,71 @@
 {% extends "base.jinja2" %}
 
-{% block navigation %}
-<nav class="navigation">
-  <a href="{{ url_for('public.index') }}">Home</a>
-  <a href="{{ url_for('public.about') }}">About</a>
-  <a href="{{ url_for('public.contact') }}">Contact</a>
-  <a href="{{ url_for('dashboard.signin') }}">Sign-in</a>
-  <a href="{{ url_for('dashboard.registration') }}">Register</a>
-</nav>
-{% endblock %}
+{% block title %}About | {{ config.APP_NAME }}{% endblock %}
 
 {% block content %}
-<section id="body">
-  <h1>Welcome to our about page.</h1>
+<section class="page-hero">
+  <div class="container narrow">
+    <span class="eyebrow">About</span>
+    <h1>A starting point you would actually ship</h1>
+    <p class="lead">{{ config.APP_NAME }} started as a way to stop rebuilding the same foundation for every Flask project. It gives you a clean, conventional structure with the pieces most web apps need, and nothing you have to fight later.</p>
+  </div>
+</section>
+
+<section class="section section-tight">
+  <div class="container narrow">
+    <h2>Principles</h2>
+    <div class="principles">
+      <div class="principle">
+        <i class="fa-solid fa-feather" aria-hidden="true"></i>
+        <div>
+          <h3>Plain Flask</h3>
+          <p>Blueprints, an application factory and Flask extensions. If you know Flask, you already know this codebase.</p>
+        </div>
+      </div>
+      <div class="principle">
+        <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
+        <div>
+          <h3>Security first</h3>
+          <p>CSRF on every form, a nonce-based Content Security Policy, scrypt password hashes and safe redirects are on from the start.</p>
+        </div>
+      </div>
+      <div class="principle">
+        <i class="fa-solid fa-code-branch" aria-hidden="true"></i>
+        <div>
+          <h3>Easy to change</h3>
+          <p>No front-end build step and no hidden magic. Delete what you do not need and extend what you do.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-tight">
+  <div class="container narrow">
+    <h2>How it is organized</h2>
+    <div class="table-wrap card">
+      <table class="table">
+        <thead><tr><th>Blueprint</th><th>URL prefix</th><th>Responsibility</th></tr></thead>
+        <tbody>
+          <tr><td><code>public</code></td><td><code>/</code></td><td>Marketing pages: home, about and contact</td></tr>
+          <tr><td><code>dashboard</code></td><td><code>/dashboard</code></td><td>Registration, sign-in, sign-out and the user dashboard</td></tr>
+          <tr><td><code>admin</code></td><td><code>/administrator</code></td><td>Admin-only metrics and user management</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="section section-tight">
+  <div class="container narrow">
+    <div class="callout">
+      <i class="fa-brands fa-github" aria-hidden="true"></i>
+      <div>
+        <h3>Open source under the MIT license</h3>
+        <p>Issues and pull requests are welcome.</p>
+      </div>
+      <a class="btn btn-secondary" href="{{ config.REPOSITORY_URL }}" rel="noopener">View repository</a>
+    </div>
+  </div>
 </section>
 {% endblock %}

@@ -1,9 +1,11 @@
 #!/bin/bash
+set -euo pipefail
 
-# load environment variables from config.env
-set -a
-source ./config.env
-set +a
+if [ ! -f config.env ]; then
+    cp config.env.example config.env
+    echo "Created config.env from config.env.example. Review it, then re-run."
+    exit 1
+fi
 
-# run docker-compose
-docker-compose up --build 
+# config.env supplies the variables used for interpolation in docker-compose.yml
+docker compose --env-file config.env up --build

@@ -1,14 +1,52 @@
 {% extends "base.jinja2" %}
 
-{% block navigation %}
-<nav class="navigation">
-  <a href="{{ url_for('dashboard.index') }}">User Dashboard</a>
-  <a href="{{ url_for('dashboard.sign_out') }}">Log out</a>
-</nav>
-{% endblock %}
+{% block title %}Dashboard | {{ config.APP_NAME }}{% endblock %}
 
 {% block content %}
-<section id="body">
-  <h1>Welcome to your user dashboard.</h1>
+<section class="app-page">
+  <div class="container">
+    <div class="page-header">
+      <div>
+        <p class="muted">Dashboard</p>
+        <h1>Hello, {{ current_user.first_name or 'there' }}</h1>
+      </div>
+    </div>
+
+    <div class="dash-grid">
+      <div class="card card-pad profile-card">
+        <div class="profile-top">
+          <span class="avatar avatar-lg" aria-hidden="true">{{ current_user|initials }}</span>
+          <div>
+            <h2>{{ current_user.full_name }}</h2>
+            <p class="muted">{{ current_user.email }}</p>
+          </div>
+        </div>
+        <dl class="details">
+          <div><dt>Member since</dt><dd>{{ current_user.created_on|datetime }}</dd></div>
+          <div><dt>Last sign-in</dt><dd>{{ current_user.last_login|datetime('%b %d, %Y %H:%M') }}</dd></div>
+          <div><dt>Role</dt><dd>{% for role in current_user.roles %}<span class="badge">{{ role.name }}</span>{% else %}<span class="badge">user</span>{% endfor %}</dd></div>
+        </dl>
+      </div>
+
+      <div class="card card-pad">
+        <h2>Getting started</h2>
+        <ul class="checklist">
+          <li class="done"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> <span>Create your account</span></li>
+          <li class="done"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> <span>Sign in to your dashboard</span></li>
+          <li><i class="fa-regular fa-circle" aria-hidden="true"></i> <span>Build your first feature in <code>webapp/dashboard</code></span></li>
+          <li><i class="fa-regular fa-circle" aria-hidden="true"></i> <span>Add a background job with RQ</span></li>
+        </ul>
+      </div>
+
+      <div class="card card-pad">
+        <h2>Resources</h2>
+        <ul class="link-list">
+          <li><a href="{{ url_for('public.about') }}"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> About this project</a></li>
+          <li><a href="{{ config.REPOSITORY_URL }}" rel="noopener"><i class="fa-brands fa-github" aria-hidden="true"></i> Source code</a></li>
+          <li><a href="{{ url_for('public.contact') }}"><i class="fa-solid fa-envelope" aria-hidden="true"></i> Contact support</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </section>
 {% endblock %}

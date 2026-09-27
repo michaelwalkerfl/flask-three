@@ -1,25 +1,22 @@
 #!/bin/sh
+set -e
 
-# wait for postgresql
-echo "Waiting for PostgreSQL..."
-while ! nc -z db 5432; do
-    sleep 0.1
-done
-echo "PostgreSQL started"
+wait_for() {
+    echo "Waiting for $1 at $2:$3..."
+    until nc -z "$2" "$3"; do
+        sleep 0.5
+    done
+    echo "$1 is up."
+}
 
-# wait for redis
-echo "Waiting for Redis..."
-while ! nc -z redis 6379; do
-    sleep 0.1
-done
-echo "Redis started"
+[ -n "$DB_HOST" ] && wait_for PostgreSQL "$DB_HOST" "${DB_PORT:-5432}"
+[ -n "$REDIS_HOST" ] && wait_for Redis "$REDIS_HOST" "${REDIS_PORT:-6379}"
 
-# initialize the database
-echo "Initializing database..."
-flask create-database
-flask create-roles
-flask create-admin
+# Idempotent setup: creates missing tables, roles and the admin user. Never drops data.
+if [ "${RUN_SETUP:-1}" = "1" ]; then
+    flask create-database
+    flask create-roles
+    flask create-admin
+fi
 
-# start flask
-echo "Starting Flask..."
-exec flask run --host=0.0.0.0 --port=5001 
+exec "$@"

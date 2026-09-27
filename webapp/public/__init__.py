@@ -1,1 +1,1 @@
-from webapp.public.views import public
+from webapp.public.views import public as public

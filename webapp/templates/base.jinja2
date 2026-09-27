@@ -3,36 +3,100 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="{% block meta_description %}{{ config.APP_NAME }} is a production-ready Flask 3 starter with authentication, user and admin dashboards, background jobs and email.{% endblock %}">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0b1120" media="(prefers-color-scheme: dark)">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='images/favicons/apple-touch-icon.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/favicons/favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/favicons/favicon-16x16.png') }}">
     <link rel="manifest" href="{{ url_for('static', filename='images/favicons/site.webmanifest') }}">
-    <title>Flask-Three</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/global.css') }}">
-    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <title>{% block title %}{{ config.APP_NAME }}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ config.FONT_AWESOME_CSS }}" integrity="{{ config.FONT_AWESOME_SRI }}" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+    <script src="{{ url_for('static', filename='js/app.js') }}" nonce="{{ csp_nonce() }}" defer></script>
     {% block custom_head_tags %}{% endblock %}
   </head>
-  <body>
+  <body class="{% block body_class %}{% endblock %}">
+    <a class="skip-link" href="#main">Skip to content</a>
     {% block header %}
-    <header>
-      <div class="logo">
-        <a href="{{ url_for('public.index') }}"><img src="{{ url_for('static', filename='images/logo.svg') }}" alt="flask-three logo" /></a>
-      </div>
-      {% block navigation %}{% endblock %}
-      <div class="hamburger-menu">
-        <div></div>
-        <div></div>
-        <div></div>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="{{ url_for('public.index') }}" aria-label="{{ config.APP_NAME }} home">
+          <picture>
+            <source srcset="{{ url_for('static', filename='images/logo-dark.png') }}" media="(prefers-color-scheme: dark)">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="{{ config.APP_NAME }}" width="118" height="40">
+          </picture>
+        </a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Toggle navigation">
+          <i class="fa-solid fa-bars" aria-hidden="true"></i>
+        </button>
+        <nav id="site-nav" class="site-nav" aria-label="Main">
+          {% set endpoint = request.endpoint or '' %}
+          {% if current_user.is_authenticated %}
+            {% if current_user.is_admin() %}
+            <a href="{{ url_for('admin.index') }}" {% if endpoint.startswith('admin.') %}aria-current="page"{% endif %}>Admin</a>
+            {% else %}
+            <a href="{{ url_for('dashboard.index') }}" {% if endpoint == 'dashboard.index' %}aria-current="page"{% endif %}>Dashboard</a>
+            {% endif %}
+            <a href="{{ url_for('public.about') }}" {% if endpoint == 'public.about' %}aria-current="page"{% endif %}>About</a>
+            <a href="{{ url_for('public.contact') }}" {% if endpoint == 'public.contact' %}aria-current="page"{% endif %}>Contact</a>
+            <span class="nav-divider" aria-hidden="true"></span>
+            <span class="nav-user">
+              <span class="avatar avatar-sm" aria-hidden="true">{{ current_user|initials }}</span>
+              <span class="nav-user-name">{{ current_user.first_name or current_user.email }}</span>
+            </span>
+            <a class="btn btn-ghost btn-sm" href="{{ url_for('dashboard.sign_out') }}"><i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i> Sign out</a>
+          {% else %}
+            <a href="{{ url_for('public.index') }}" {% if endpoint == 'public.index' %}aria-current="page"{% endif %}>Home</a>
+            <a href="{{ url_for('public.about') }}" {% if endpoint == 'public.about' %}aria-current="page"{% endif %}>About</a>
+            <a href="{{ url_for('public.contact') }}" {% if endpoint == 'public.contact' %}aria-current="page"{% endif %}>Contact</a>
+            <span class="nav-divider" aria-hidden="true"></span>
+            <a href="{{ url_for('dashboard.signin') }}" {% if endpoint == 'dashboard.signin' %}aria-current="page"{% endif %}>Sign in</a>
+            <a class="btn btn-primary btn-sm" href="{{ url_for('dashboard.registration') }}">Get started</a>
+          {% endif %}
+        </nav>
       </div>
     </header>
     {% endblock %}
-    {% block content %}{% endblock %}
 
-    {%  if csrf_token() %}
-    <div class="csrf">
-        <input type="hidden" name="csrf_token" value="{{  csrf_token() }}">
-    </div>
-    {% endif %}
+    <main id="main">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+      <div class="container flash-stack" role="status">
+        {% for category, message in messages %}
+        {% set kind = category if category in ('success', 'error', 'info') else 'info' %}
+        <div class="alert alert-{{ kind }}">
+          <i class="fa-solid {{ {'success': 'fa-circle-check', 'error': 'fa-circle-exclamation', 'info': 'fa-circle-info'}[kind] }}" aria-hidden="true"></i>
+          <span>{{ message }}</span>
+          <button type="button" class="alert-close" aria-label="Dismiss"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+      {% endwith %}
+
+      {% block content %}{% endblock %}
+    </main>
+
+    {% block footer %}
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div class="footer-brand">
+          <picture>
+            <source srcset="{{ url_for('static', filename='images/logo-dark.png') }}" media="(prefers-color-scheme: dark)">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="{{ config.APP_NAME }}" width="94" height="32">
+          </picture>
+          <p>A production-ready Flask 3 starter.</p>
+        </div>
+        <nav class="footer-links" aria-label="Footer">
+          <a href="{{ url_for('public.about') }}">About</a>
+          <a href="{{ url_for('public.contact') }}">Contact</a>
+          <a href="{{ config.REPOSITORY_URL }}" rel="noopener"><i class="fa-brands fa-github" aria-hidden="true"></i> GitHub</a>
+        </nav>
+        <p class="footer-meta">&copy; {{ current_year }} {{ config.APP_NAME }}. MIT licensed.</p>
+      </div>
+    </footer>
+    {% endblock %}
   </body>
 </html>

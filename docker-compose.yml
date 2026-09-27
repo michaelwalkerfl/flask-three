@@ -1,71 +1,63 @@
-version: '3.8'
+# Local development stack: web (Flask debug server), RQ worker, PostgreSQL and Redis.
+x-app: &app
+  build: .
+  env_file: config.env
+  environment:
+    APP_ENV: development
+    DB_HOST: db
+    REDIS_HOST: redis
+  volumes:
+    - .:/app
+  depends_on:
+    db:
+      condition: service_healthy
+    redis:
+      condition: service_healthy
 
 services:
   web:
-    build: 
-      context: .
-      dockerfile: Dockerfile
+    <<: *app
+    command: flask run --debug --host=0.0.0.0 --port=5001
     ports:
-      - "5001:5001"
-    env_file:
-      - config.env
+      - "127.0.0.1:5001:5001"
+
+  worker:
+    <<: *app
     environment:
-      - FLASK_APP=wsgi.py
-      - FLASK_ENV=development
-      - FLASK_DEBUG=1
-      - DEVELOPMENT_DATABASE=${DEVELOPMENT_DATABASE}
-      - SESSION_REDIS=${SESSION_REDIS}
-      - RQ_REDIS_URL=${SESSION_REDIS}
-      - MAIL_SERVER=${MAIL_SERVER}
-      - MAIL_PORT=587
-      - MAIL_USE_TLS=True
-      - MAIL_USERNAME=${MAIL_USERNAME}
-      - MAIL_PASSWORD=${MAIL_PASSWORD}
-      - ADMIN_EMAIL=${ADMIN_EMAIL}
-      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
-    volumes:
-      - .:/app
-      - ./webapp/static:/app/webapp/static
-    depends_on:
-      - db
-      - redis
-    networks:
-      - flaskthree_network
-    command: >
-      sh -c "pip install -r requirements.txt &&
-             flask create-database &&
-             flask create-roles &&
-             flask create-admin &&
-             flask run --host=0.0.0.0 --port=5001"
+      APP_ENV: development
+      DB_HOST: db
+      REDIS_HOST: redis
+      RUN_SETUP: "0"
+    command: sh -c 'rq worker default --url "$$SESSION_REDIS"'
 
   db:
-    image: postgres:14-alpine
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: ${DB_USER:-flaskthreeuser}
+      POSTGRES_PASSWORD: ${DB_PASS:-flaskthreepassword}
+      POSTGRES_DB: ${DB_NAME:-flaskthree}
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    env_file:
-      - config.env
-    environment:
-      - POSTGRES_USER=${DB_USER}
-      - POSTGRES_PASSWORD=${DB_PASS}
-      - POSTGRES_DB=${DB_NAME}
     ports:
-      - "5433:5432"
-    networks:
-      - flaskthree_network
+      - "127.0.0.1:5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
 
   redis:
     image: redis:7-alpine
-    ports:
-      - "6379:6379"
     volumes:
       - redis_data:/data
-    networks:
-      - flaskthree_network
+    ports:
+      - "127.0.0.1:6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
 
 volumes:
   postgres_data:
   redis_data:
-
-networks:
-  flaskthree_network:
-    driver: bridge 

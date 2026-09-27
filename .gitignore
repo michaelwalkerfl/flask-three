@@ -130,3 +130,9 @@ dmypy.json
 
 # MacOS
 .DS_Store
+
+# Local config, secrets and databases
+config.env
+ssl/
+*.pem
+*.sqlite

@@ -1,15 +1,69 @@
 {% extends "base.jinja2" %}
 
-{% block navigation %}
-<nav class="navigation">
-  <a href="{{ url_for('dashboard.index') }}">User Dashboard</a>
-  <a href="{{ url_for('admin.index') }}">Admin Dashboard</a>
-  <a href="{{ url_for('dashboard.sign_out') }}">Log out</a>
-</nav>
-{% endblock %}
+{% block title %}Admin | {{ config.APP_NAME }}{% endblock %}
 
 {% block content %}
-<section id="body">
-  <h1>Welcome to your admin dashboard.</h1>
+<section class="app-page">
+  <div class="container">
+    <div class="page-header">
+      <div>
+        <p class="muted">Administration</p>
+        <h1>Overview</h1>
+      </div>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat card">
+        <span class="stat-icon"><i class="fa-solid fa-users" aria-hidden="true"></i></span>
+        <div><p class="stat-label">Total users</p><p class="stat-value">{{ stats.total_users }}</p></div>
+      </div>
+      <div class="stat card">
+        <span class="stat-icon"><i class="fa-solid fa-user-plus" aria-hidden="true"></i></span>
+        <div><p class="stat-label">New this week</p><p class="stat-value">{{ stats.new_this_week }}</p></div>
+      </div>
+      <div class="stat card">
+        <span class="stat-icon"><i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i></span>
+        <div><p class="stat-label">Active this week</p><p class="stat-value">{{ stats.active_this_week }}</p></div>
+      </div>
+      <div class="stat card">
+        <span class="stat-icon"><i class="fa-solid fa-user-shield" aria-hidden="true"></i></span>
+        <div><p class="stat-label">Admins</p><p class="stat-value">{{ stats.admins }}</p></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <h2>Users</h2>
+        <span class="muted">{{ users.total }} total</span>
+      </div>
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr><th>Name</th><th>Email</th><th>Roles</th><th>Joined</th><th>Last sign-in</th></tr>
+          </thead>
+          <tbody>
+            {% for user in users.items %}
+            <tr>
+              <td><span class="user-cell"><span class="avatar avatar-sm" aria-hidden="true">{{ user|initials }}</span>{{ user.full_name }}</span></td>
+              <td>{{ user.email }}</td>
+              <td>{% for role in user.roles %}<span class="badge{% if role.name == 'admin' %} badge-accent{% endif %}">{{ role.name }}</span>{% endfor %}</td>
+              <td>{{ user.created_on|datetime }}</td>
+              <td>{{ user.last_login|datetime }}</td>
+            </tr>
+            {% else %}
+            <tr><td colspan="5" class="empty">No users yet.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% if users.pages > 1 %}
+      <nav class="pagination" aria-label="User pages">
+        {% if users.has_prev %}<a class="btn btn-ghost btn-sm" href="{{ url_for('admin.index', page=users.prev_num) }}"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i> Previous</a>{% endif %}
+        <span class="muted">Page {{ users.page }} of {{ users.pages }}</span>
+        {% if users.has_next %}<a class="btn btn-ghost btn-sm" href="{{ url_for('admin.index', page=users.next_num) }}">Next <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></a>{% endif %}
+      </nav>
+      {% endif %}
+    </div>
+  </div>
 </section>
 {% endblock %}

@@ -1,17 +1,54 @@
 {% extends "base.jinja2" %}
+{% from "_macros.jinja2" import field %}
 
-{% block navigation %}
-<nav class="navigation">
-  <a href="{{ url_for('public.index') }}">Home</a>
-  <a href="{{ url_for('public.about') }}">About</a>
-  <a href="{{ url_for('public.contact') }}">Contact</a>
-  <a href="{{ url_for('dashboard.signin') }}">Sign-in</a>
-  <a href="{{ url_for('dashboard.registration') }}">Register</a>
-</nav>
-{% endblock %}
+{% block title %}Contact | {{ config.APP_NAME }}{% endblock %}
 
 {% block content %}
-<section id="body">
-  <h1>Welcome to our contact page.</h1>
+<section class="page-hero">
+  <div class="container">
+    <span class="eyebrow">Contact</span>
+    <h1>Get in touch</h1>
+    <p class="lead">Questions, feedback or a bug to report? Send a message and it will land straight in our inbox.</p>
+  </div>
+</section>
+
+<section class="section section-tight">
+  <div class="container contact-grid">
+    <div class="card card-pad">
+      <form method="POST" action="{{ url_for('public.contact') }}" novalidate>
+        {{ form.csrf_token }}
+        <div class="field-row">
+          {{ field(form.name, 'Jane Doe', autocomplete='name') }}
+          {{ field(form.email, 'you@example.com', autocomplete='email') }}
+        </div>
+        {{ field(form.subject, 'How can we help?') }}
+        {{ field(form.message, 'Tell us a little more...', rows=6) }}
+        {{ form.submit(class='btn btn-primary') }}
+      </form>
+    </div>
+    <aside class="contact-aside">
+      <div class="contact-item">
+        <i class="fa-solid fa-bug" aria-hidden="true"></i>
+        <div>
+          <h3>Found a bug?</h3>
+          <p>Open an issue on <a href="{{ config.REPOSITORY_URL }}/issues" rel="noopener">GitHub</a> with steps to reproduce.</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <i class="fa-solid fa-code-pull-request" aria-hidden="true"></i>
+        <div>
+          <h3>Want to contribute?</h3>
+          <p>Pull requests are welcome. Run the linter and tests before submitting.</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <i class="fa-solid fa-clock" aria-hidden="true"></i>
+        <div>
+          <h3>Response time</h3>
+          <p>We usually reply within two business days.</p>
+        </div>
+      </div>
+    </aside>
+  </div>
 </section>
 {% endblock %}

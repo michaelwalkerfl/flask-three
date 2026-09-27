@@ -1,0 +1,14 @@
+{% extends "base.jinja2" %}
+
+{% block title %}{{ title }} | {{ config.APP_NAME }}{% endblock %}
+
+{% block content %}
+<section class="error-page">
+  <div class="container narrow">
+    <p class="error-code">{{ code }}</p>
+    <h1>{{ title }}</h1>
+    <p class="lead">{{ message }}</p>
+    <a class="btn btn-primary" href="{{ url_for('public.index') }}"><i class="fa-solid fa-house" aria-hidden="true"></i> Back to home</a>
+  </div>
+</section>
+{% endblock %}
